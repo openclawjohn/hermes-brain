@@ -1,0 +1,7 @@
+# Obsidian vault gitignore
+# Private notes - but we want to track them
+# Just exclude temp/cache
+.DS_Store
+Thumbs.db
+*.tmp
+.trash/

@@ -1,35 +1,36 @@
 # Portfolio Sites — Project State
-## Updated: 2026-07-14
+## Updated: 2026-08-03
 
 ## All 7 Sites — Content Status
 
 | Site | Posts | @1,500+ | Avg Words | Images | Status |
 |------|:-----:|:-------:|:---------:|:------:|:-------|
-| **sumza.co.za** | 27 | **27** ✅ | 1,619 | 27 | ✅ Complete |
-| **howzitza.co.za** | 14 | **14** ✅ | 1,702 | 14 | ✅ Complete |
-| **saymyname.co.za** | 31 | **31** ✅ | 1,686 | 31 | ✅ Complete |
-| **5minutes.co.za** | 40 | **40** ✅ | 1,500+ | 40 | ✅ Complete (Elementor game posts verified live) |
-| **whippetqr.com** | 36 | **36** ✅ | 1,805 | 36 | ✅ Complete |
-| **zadocs.co.za** | 64 | **64** ✅ | 1,549 | 64 | ✅ Complete |
-| **beanel.com** | 31 | **31** ✅ | 1,827 | 30 | ✅ Complete |
-| **Total** | **243** | **243** | **1,677 avg** | **242** | **✅ 100%** |
+| **sumza.co.za** | 31 | **31** ✅ | 1,600+ | 31 | ✅ Complete |
+| **howzitza.co.za** | 14 | **14** ✅ | 1,600+ | 14 | ✅ Complete |
+| **saymyname.co.za** | 29 | **29** ✅ | 1,600+ | 29 | ✅ Complete |
+| **5minutes.co.za** | 28 | **28** ✅ | 1,500+ | 28 | ✅ Complete |
+| **whippetqr.com** | 37 | **37** ✅ | 1,800+ | 37 | ✅ Complete |
+| **zadocs.co.za** | 65 | **65** ✅ | 1,500+ | 65 | ✅ Complete |
+| **beanel.com** | 32 | **32** ✅ | 1,800+ | 32 | ✅ Complete |
+| **Total** | **236** | **236** | **1,600+ avg** | **236** | **✅ 100%** |
+
+## Recent Work (2026-08-03)
+- **Article expansions:** 12 articles expanded to 1,500+ words across whippetqr (3), howzitza (3), saymyname (3), 5minutes (3)
+- **Redirect fixes:** whippetqr /contact/ and zadocs /contact/ now 200 (were 301)
+- **Sitemaps:** Regenerated on zadocs, saymyname, 5minutes (lastmod updated Jul 24 → Aug 3)
+- **IndexNow:** All 7 sites pinged after content changes
+- **CEO skill:** Updated to v2.1 with article quality, sitemap freshness, and auto-ping checks
+
+## CEO of Domains — Daily Cron
+- Runs daily at 08:00 (job eb66b3bea877)
+- Weekly rotation: Mon=cross-links, Tue=Reddit, Wed=Quora, Thu=Pinterest, Fri=LinkedIn/Quora, Sat=SEO, Sun=research
+- v2.1 skill includes: fix-everything mandate, article quality checks, sitemap freshness, IndexNow auto-ping
 
 ## Credentials — Single Source of Truth
 - `/home/m/credentials.json`
 - `/home/m/SITE_CREDENTIALS.md`
-- Both contain: FTP (both servers), REST API (all 7 sites), browser login, DB, AdSense
-
-### FTP Servers
-| Server | Host | User | Pass | Sites |
-|--------|------|------|------|-------|
-| Main (cp47) | cp47-jhb.za-dns.com (164.160.91.40) | whippetq | .tnP01u:2IZLe6 | sumza, howzitza, saymyname, 5minutes, whippetqr (public_html/), zadocs |
-| Beanel | www.clashofthecultivars.com (164.160.91.56) | clashoft | w@8$VbUU$0BGC8%q}q | beanel.com (beanel.com/ dir) |
-
-## AdSense
-- Pub ID: pub-1162021827795507
-- ads.txt deployed and serving on all 7 domains
 
 ## Known Issues
-- 5minutes.co.za: 5 Elementor game posts (IDs 132, 134, 136, 138, 140) — content in `_elementor_data`, verified live at full 1,500+ words
-- beanel.com: 1 post missing featured image (ID 900)
-- All sites need ongoing content via weekly cron (Tuesdays 02:00)
+- **Beanel FTP access** — broken, cannot fix contact redirect or sitemap remotely
+- **Sitemap regeneration** — failed on whippetqr, howzitza, sumza, beanel (PHP error on those sites)
+- **REST API** — application passwords lack edit permissions, must use PHP/FTP for content updates

@@ -38,6 +38,14 @@ Every task requires:
 - Obsidian doc in `/home/m/Documents/HermesBrain/`
 - PROJECT_STATE.md, DESIGN_SYSTEM.md, RULES.md updated
 
+### 8. NEVER Publish Template-Shell Content (Byte-Identical Boilerplate)
+**THE #1 AdSense "Low value content" cause — discovered 2026-08-07 on zadocs.co.za.**
+- A template-shell is a page where the SAME factory-written boilerplate skeleton appears on MANY pages (e.g. identical `Overview` / `When To Use This Template` / `How To Complete` / `FAQs` / `Understanding South African Law` H2s on every post). Google's reviewer sees duplicated auto-generated text and rejects the site regardless of word count.
+- zadocs had 63/66 posts as byte-identical template shells — the "Understanding South African Law" tail was hash-identical across all 63. This is why rejections "never stopped" despite passing word-count/sitemap/category box-checks.
+- **Before EVER claiming a site is AdSense-ready, run the template-shell detection** (see `adsense-quality-debug` skill Trigger 8): fetch all posts, count repeated H2s. If the same H2 appears on 60%+ of posts, the site has template-shell content and is NOT ready.
+- **The fix is a rewrite, not deletion:** each page needs genuinely unique, document-specific prose (1,500+ words), not just the boilerplate removed.
+- All 7 sites were audited 2026-08-07. zadocs is fixed. **sumza, beanel, whippetqr, saymyname, 5minutes still have template-signature content and must be rewritten before they can be AdSense-ready.**
+
 ---
 
 ## 📋 Per-Domain Quality Gates

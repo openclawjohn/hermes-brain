@@ -60,6 +60,7 @@ Every task requires:
 - After adding a redirect or renaming a slug, `curl` may STILL show HTTP 200 with the OLD content because LiteSpeed serves a cached copy. This looks like the fix failed when it actually worked.
 - **Always purge before verifying:** `\LiteSpeed\Purge::purge_all();` + `do_action('litespeed_purge_all');` via a PHP script, THEN re-test the URL. Only trust the redirect/URL behavior after cache is purged.
 - This is the same trap as the beanel map — cached server state lies about whether a fix took effect.
+- **🚨 CRITICAL (2026-08-18):** `\LiteSpeed\Purge::purge_all()` + `do_action('litespeed_purge_all')` do NOT always clear the server page cache. The actual server cache lives at **`/home/whippetq/lscache`** (NOT `wp-content/litespeed`). If a page stays stale after `purge_all`, delete the files under `/home/whippetq/lscache` via a PHP `rrmdir()` script to force a fresh render. This was required to make the 5minutes post-138 expansion show up.
 
 ---
 

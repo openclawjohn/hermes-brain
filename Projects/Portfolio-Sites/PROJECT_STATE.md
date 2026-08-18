@@ -1,5 +1,5 @@
 # Portfolio Sites — Project State
-## Updated: 2026-08-03
+## Updated: 2026-08-18
 
 ## All 7 Sites — Content Status
 
@@ -15,6 +15,14 @@
 | **zadocs.co.za** | 65 | **65** ✅ | 1,500+ | 65 | ✅ **REWRITTEN 2026-08-07** (was 63 template shells) |
 | **beanel.com** | 32 | **32** ✅ | 1,800+ | 32 | ✅ Clean (WTM removed 28 posts) |
 | **Total** | **236** | **236** | **1,600+ avg** | **236** | **✅ 100% CLEAN** |
+
+## Recent Work (2026-08-18)
+- **Weekly Blog Posts backfill (COMPLETE):** Machine was off Aug 10–15; the Tue Aug 11 weekly cron missed. Triggered manually — 7 articles published (1/site), all verified live (HTTP 200), 2 distinct in-content images each, correctly positioned, real categories, in sitemaps. See `2026-08-18-weekly-blog-backfill-image-fixes-ceo-maintenance.md`.
+- **Image quality audit + 3 replacements (COMPLETE):** Ran mandatory `vision_analyze` pixel inspection on all 9 new article images. 3 failed (sumza fuel hero "ORINO"/"R" branding, sumza fuel content receipt text, whippetqr WhatsApp content Chinese chars/logos). Replaced all 3 with clean fal.ai Klein images, inspected clean, uploaded via FTP, content updated via PHP, cache purged, verified live.
+- **5minutes post 138 expanded (COMPLETE):** Was 1475 words (under 1500). It's an **Elementor page** — `wp_update_post` doesn't update rendered content. Fixed via Elementor MCP `elementor_mcp_update_widget` (widget `7eb369a`). Now 1655 words, verified live.
+- **CEO backfill (PARTIAL):** Quora 1 answer posted+verified. Pinterest NOT done (save-from-URL UI won't render selection; bridge lacks CDP file-upload). Reddit/Medium BLOCKED (logged out in Chrome).
+- **Phase 3 maintenance (COMPLETE):** All 7 sites up; IndexNow keys/sitemaps/ads.txt all 200; AdSense meta present; no broken slugs; no missing alt text; all 7 new articles in sitemaps.
+- **KEY LEARNING — LiteSpeed cache:** `\LiteSpeed\Purge::purge_all()` + `do_action('litespeed_purge_all')` do NOT clear the server page cache. Actual cache is at **`/home/whippetq/lscache`** (NOT `wp-content/litespeed`). Must delete files there via PHP `rrmdir()` to force fresh render.
 
 ## Recent Work (2026-08-10)
 - **Indexing/canonical duplicate fix (COMPLETE):** Google emailed about saymyname "cannot be indexed — Duplicate, Google chose different canonical." Audited ALL 7 sites' Google emails + live GSC indexing reports. Root cause: orphaned `-2` duplicate pages self-canonicalizing in sitemaps. Fixed on 3 sites:
@@ -57,3 +65,5 @@
 - **Beanel FTP access** — broken, cannot fix contact redirect or sitemap remotely
 - **Sitemap regeneration** — failed on whippetqr, howzitza, sumza, beanel (PHP error on those sites)
 - **REST API** — application passwords lack edit permissions, must use PHP/FTP for content updates
+- **Pinterest pin creation via bridge** — save-from-URL fetches image but selection UI never renders; bridge lacks CDP file-upload. Needs manual pin or CDP route.
+- **Reddit / Medium** — logged out in Chrome profile; CEO backfill for these platforms blocked until user logs in.

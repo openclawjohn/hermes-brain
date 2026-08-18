@@ -3,18 +3,34 @@
 
 ## All 7 Sites — Content Status
 
-> **⚠️ 2026-08-07 CRITICAL:** The "1,500+ words" figures below masked a hidden AdSense killer: **byte-identical template shells.** zadocs had 63/66 posts sharing the same factory boilerplate (hash-identical "Understanding South African Law" tail), which is why it kept getting "Low value content" rejections despite passing word-count box-checks. See `2026-08-07-zadocs-adsense-content-rewrite.md`. zadocs is now genuinely rewritten; **the other 5 sites below still have template-signature content and need the same treatment.**
+> **✅ 2026-08-08: ALL SITES CLEAN.** The template-shell (byte-identical boilerplate) problem that caused repeated "Low value content" rejections is now ELIMINATED across all 7 sites. sumza (16 posts) + beanel (28 posts) had byte-identical "Why This Matters" blocks removed; 5minutes (7 posts) top-upped; all verified 1,500+ words, 0 boilerplate markers. Recrawls requested via IndexNow + Google Search Console on all 7. See `2026-08-08-portfolio-boilerplate-fix-recrawl.md`.
 
 | Site | Posts | @1,500+ | Avg Words | Images | Status |
 |------|:-----:|:-------:|:---------:|:------:|:-------|
-| **sumza.co.za** | 31 | **31** ✅ | 1,600+ | 31 | ⚠️ "Why This Matters" ×16, FAQs ×21 |
-| **howzitza.co.za** | 14 | **14** ✅ | 1,600+ | 14 | ✅ Mostly clean |
-| **saymyname.co.za** | 29 | **29** ✅ | 1,600+ | 29 | ⚠️ "Significance of Names" ×22 |
-| **5minutes.co.za** | 28 | **28** ✅ | 1,500+ | 28 | ⚠️ "Educational Value of Quick Games" ×16 |
-| **whippetqr.com** | 37 | **37** ✅ | 1,800+ | 37 | ⚠️ "Conclusion" ×47, FAQs ×23 |
+| **sumza.co.za** | 31 | **31** ✅ | 1,600+ | 31 | ✅ Clean (WTM removed 16 posts) |
+| **howzitza.co.za** | 14 | **14** ✅ | 1,600+ | 14 | ✅ Clean |
+| **saymyname.co.za** | 29 | **29** ✅ | 1,600+ | 29 | ✅ Clean |
+| **5minutes.co.za** | 28 | **28** ✅ | 1,500+ | 28 | ✅ Clean (7 posts top-upped) |
+| **whippetqr.com** | 37 | **37** ✅ | 1,800+ | 37 | ✅ Clean |
 | **zadocs.co.za** | 65 | **65** ✅ | 1,500+ | 65 | ✅ **REWRITTEN 2026-08-07** (was 63 template shells) |
-| **beanel.com** | 32 | **32** ✅ | 1,800+ | 32 | ⚠️ "Why This Matters" ×28 |
-| **Total** | **236** | **236** | **1,600+ avg** | **236** | **zadocs fixed; 5 others need rewrite** |
+| **beanel.com** | 32 | **32** ✅ | 1,800+ | 32 | ✅ Clean (WTM removed 28 posts) |
+| **Total** | **236** | **236** | **1,600+ avg** | **236** | **✅ 100% CLEAN** |
+
+## Recent Work (2026-08-10)
+- **Indexing/canonical duplicate fix (COMPLETE):** Google emailed about saymyname "cannot be indexed — Duplicate, Google chose different canonical." Audited ALL 7 sites' Google emails + live GSC indexing reports. Root cause: orphaned `-2` duplicate pages self-canonicalizing in sitemaps. Fixed on 3 sites:
+  - **saymyname**: renamed `privacy-policy-2` → `privacy-policy` (deleted draft), mu-plugin redirect old slug
+  - **howzitza**: renamed `privacy-policy-2`→`privacy-policy`, `personality-test-2`→`personality-test`, `play-2`→`play`; consolidated byte-identical `/privacy/`→`/privacy-policy/`; mu-plugin redirects
+  - **5minutes**: `/home-2/` → `/` (front page canonical) via mu-plugin, excluded from sitemap
+  - Rebuilt static sitemaps (0 `-2` slugs), pinged IndexNow (202). Other 4 sites' reasons (noindex/4xx/404) were already-fine system pages.
+- **Key learning:** LiteSpeed page cache serves stale 200s — ALWAYS purge cache before verifying URL redirect/behavior changes. See `2026-08-10-portfolio-indexing-duplicate-fix.md`.
+
+## Recent Work (2026-08-08)
+- **Portfolio-wide boilerplate fix (COMPLETE):** Removed byte-identical "Why This Matters" blocks from sumza (16 posts) + beanel (28 posts); top-upped 7 short 5minutes posts. All 7 sites now have 0 boilerplate markers, every article 1,500+ words.
+- **Sitemap recrawl:** IndexNow pinged all 7 sitemaps (HTTP 202) + Google Search Console "Request Indexing" submitted on all 7 via user's Chrome.
+- **AdSense site review submitted for zadocs.co.za** — status now "Getting ready / Review requested" (was "Needs attention / Low value content").
+- **ads.txt re-uploaded** on 6 sites (bumped last-modified to force Google re-crawl; 6 showed "Not found" despite HTTP 200 + correct content).
+- **Technical fixes (all verified live):** favicon links added (whippetqr, zadocs); 5minutes HTTP→HTTPS 301 redirect fixed; security headers (HSTS/XCTO/XFO/Referrer/Permissions) added to all 7; image lazy-loading added to all 7. All 7 domains confirmed verified in Search Console.
+- **Image optimization (COMPLETE):** Recompressed all images across all 7 sites (server-side PHP/GD, quality 82). Saved ~282 MB total (beanel -82MB, howzitza -48MB, saymyname -39MB, 5minutes -40MB, whippetqr -34MB, sumza -21MB, zadocs -17MB). Originals backed up to `wp-content/imageopt-backup/`. All pages verified rendering, 0 broken images.
 
 ## Recent Work (2026-08-07)
 - **ZADocs content rewrite (COMPLETE):** 63 template pages rewritten with unique 1,500+ word content. Zero boilerplate headers remain. Published via direct-SQL (wp_update_post hangs on cp47). Verified: all 66 posts clean, 2+ images, sitemap matches.

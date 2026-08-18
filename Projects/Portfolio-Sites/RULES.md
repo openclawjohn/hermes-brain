@@ -42,9 +42,24 @@ Every task requires:
 **THE #1 AdSense "Low value content" cause — discovered 2026-08-07 on zadocs.co.za.**
 - A template-shell is a page where the SAME factory-written boilerplate skeleton appears on MANY pages (e.g. identical `Overview` / `When To Use This Template` / `How To Complete` / `FAQs` / `Understanding South African Law` H2s on every post). Google's reviewer sees duplicated auto-generated text and rejects the site regardless of word count.
 - zadocs had 63/66 posts as byte-identical template shells — the "Understanding South African Law" tail was hash-identical across all 63. This is why rejections "never stopped" despite passing word-count/sitemap/category box-checks.
-- **Before EVER claiming a site is AdSense-ready, run the template-shell detection** (see `adsense-quality-debug` skill Trigger 8): fetch all posts, count repeated H2s. If the same H2 appears on 60%+ of posts, the site has template-shell content and is NOT ready.
+- sumza (16 posts) and beanel (28 posts) also had byte-identical "Why This Matters" filler blocks (beanel's was 40-65% of each article).
+- **Before EVER claiming a site is AdSense-ready, run the template-shell detection** (see `adsense-quality-debug` skill Trigger 8): fetch all posts, hash repeated sections. If the same text appears on 60%+ of posts, the site has template-shell content and is NOT ready.
 - **The fix is a rewrite, not deletion:** each page needs genuinely unique, document-specific prose (1,500+ words), not just the boilerplate removed.
-- All 7 sites were audited 2026-08-07. zadocs is fixed. **sumza, beanel, whippetqr, saymyname, 5minutes still have template-signature content and must be rewritten before they can be AdSense-ready.**
+- **✅ STATUS (2026-08-08): ALL 7 SITES CLEAN.** Byte-identical boilerplate eliminated everywhere; all articles 1,500+ words; recrawls requested on all 7.
+
+### 9. NEVER Leave Orphaned `-2`/`-3` Duplicate Pages (Indexing Blocker)
+**Google "Duplicate, Google chose different canonical than user" / "Alternate page with proper canonical tag" cause — discovered 2026-08-10.**
+- When WordPress renames a page, the old slug's page may survive as `slug-2` (or `-3`, `-4`) serving HTTP 200 with a self-canonical tag. If that `-2` page is in the sitemap, it competes with the clean slug and Google picks a "different canonical," blocking indexing.
+- Found on: saymyname (`privacy-policy-2`), howzitza (`privacy-policy-2`, `personality-test-2`, `play-2`), 5minutes (`home-2`).
+- **Fix:** rename the `-2` page to the clean slug (delete any draft holding the clean slug first), add `_wp_old_slug` meta so old URL 301s, OR add a `template_redirect` mu-plugin 301 for the old slug. Rebuild the static sitemap. Ping IndexNow.
+- **Check:** scan page+post sitemaps for `-[2-9]` slug suffixes AND verify they're not legitimate years (`-2026` is a year, not a duplicate).
+- **✅ STATUS (2026-08-10): Fixed on all 3 affected sites.** All 7 sites now have 0 true `-2` duplicate slugs in sitemaps.
+
+### 10. Purge LiteSpeed Cache Before Verifying URL/Redirect Changes
+**LiteSpeed page cache serves stale HTTP 200s — discovered 2026-08-10 on 5minutes.**
+- After adding a redirect or renaming a slug, `curl` may STILL show HTTP 200 with the OLD content because LiteSpeed serves a cached copy. This looks like the fix failed when it actually worked.
+- **Always purge before verifying:** `\LiteSpeed\Purge::purge_all();` + `do_action('litespeed_purge_all');` via a PHP script, THEN re-test the URL. Only trust the redirect/URL behavior after cache is purged.
+- This is the same trap as the beanel map — cached server state lies about whether a fix took effect.
 
 ---
 

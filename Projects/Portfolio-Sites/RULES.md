@@ -75,6 +75,12 @@ Every task requires:
 
 **The CEO is not incapable — it was dispatched wrong.** One narrow task, pre-fetched content, exact fix method, bounded scope, independent verification, direct-work fallback. This is the only configuration that reliably delivers.
 
+### 12. Every Article Needs Internal Links + Unique Titles (2026-08-20)
+**Discovered by the auditor's second course of enrichment.**
+- **Internal links:** Every article should link to at least 2–3 other pages on the same site (contextual "Related Reading" links). Google's "clear navigation / user experience" requirement expects this. On 2026-08-20, 6 of 7 sites had recent articles with ZERO internal links (sumza was the only one passing). Fixed by appending a "Related Reading" block with 3 contextual links to each flagged article.
+- **Unique titles:** No two posts may share the same title. On 2026-08-20, whippetqr had 2 posts with the identical title "QR Code Marketing: Creative Campaign Ideas for South African Businesses" (different content). Renamed one to a unique title + slug.
+- **Check:** The auditor's `internal_links` and `duplicate_titles` checks catch these. Run the auditor after any content change.
+
 ---
 
 ## 📋 Per-Domain Quality Gates

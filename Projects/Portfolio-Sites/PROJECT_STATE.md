@@ -1,5 +1,16 @@
 # Portfolio Sites — Project State
-## Updated: 2026-08-19
+## Updated: 2026-08-20
+
+## Recent Work (2026-08-20)
+- **Independent AdSense Auditor built + first run (COMPLETE):** Built a standalone from-scratch auditor at `~/.hermes/scripts/adsense-auditor.py` (backed up to `github.com/openclawjohn/hermes-backup` branch `feature/adsense-auditor`). It re-checks every AdSense gate item independently against the live site — does NOT trust prior "clean" status. Uses the corrected stripped-text full-section hash for template-shell detection. Ran across all 7 sites in 154s. **Result: NONE of the 7 sites is fully AdSense-ready.** The 2026-08-08 "ALL SITES CLEAN" claim was WRONG — the auditor surfaced byte-identical template shells on 5minutes (16 posts), sumza, whippetqr, and howzitza that the prior audit missed. See `2026-08-20-independent-adsense-auditor.md`.
+- **KEY FINDINGS (verified, not false positives):**
+  - **5minutes:** 3 template shells — "The Educational Value of Quick Games" ×16 (436w byte-identical, 1 hash), "Why These Quick Games Matter" ×16, "Making the Most of Your Game Time" ×6
+  - **sumza:** 4 template shells ("Common Misconceptions" ×13, "Practical Next Steps" ×5, "Summary" ×5, "UIF Claims Process" ×2) + 3 duplicate H2s
+  - **whippetqr:** 13 duplicate H2s + 2 template shells ("FAQ About QR Codes" ×6 = 971w identical, "Practical Tips" ×3)
+  - **howzitza:** only 18 posts (need 30+), 1 dup H2, 1 template shell, 1 Uncategorized post, 3 image-less posts
+  - **saymyname:** only 29 posts (need 30+), 4 posts under 1,500 words, 1 image-less post
+  - **beanel:** 2 posts <2 images; **zadocs:** 3 posts <2 images + 7 posts boilerplate markers
+- **KEY LEARNING:** The 2026-08-08 "ALL SITES CLEAN" was based on the flawed raw-HTML hash methodology. The independent auditor (stripped-text full-section hash) is now the source of truth. Re-run it after any fix to confirm 0 FAILs.
 
 ## Recent Work (2026-08-19)
 - **SayMyName low-value-content fix (COMPLETE):** Google flagged saymyname for "Low value content." Root cause was **byte-identical boilerplate sections** reused across 20 of 29 articles ("The Significance/Importance of Names in South African Culture", "More About African Naming Traditions", "Choosing a Business Name") — the correct stripped-text hash test proved them factory copies. Authored unique 1,500+ word top-ups for all 20, removed all boilerplate, deployed via direct `$wpdb->update`, purged LiteSpeed. **Verified: 0 boilerplate sections remain, all 20 posts ≥1,500 words.** Earlier "Clean" status was wrong (hashed raw HTML, not stripped text). See `2026-08-19-saymyname-low-value-content-fix.md`.
@@ -8,18 +19,18 @@
 
 ## All 7 Sites — Content Status
 
-> **✅ 2026-08-08: ALL SITES CLEAN.** The template-shell (byte-identical boilerplate) problem that caused repeated "Low value content" rejections is now ELIMINATED across all 7 sites. sumza (16 posts) + beanel (28 posts) had byte-identical "Why This Matters" blocks removed; 5minutes (7 posts) top-upped; all verified 1,500+ words, 0 boilerplate markers. Recrawls requested via IndexNow + Google Search Console on all 7. See `2026-08-08-portfolio-boilerplate-fix-recrawl.md`.
+> **⚠️ 2026-08-20: "ALL SITES CLEAN" (2026-08-08) was WRONG.** The independent auditor (stripped-text full-section hash) found byte-identical template shells on 5minutes, sumza, whippetqr, and howzitza that the prior audit missed. **None of the 7 sites is fully AdSense-ready.** See `2026-08-20-independent-adsense-auditor.md` for the full findings and fix list.
 
-| Site | Posts | @1,500+ | Avg Words | Images | Status |
-|------|:-----:|:-------:|:---------:|:------:|:-------|
-| **sumza.co.za** | 31 | **31** ✅ | 1,600+ | 31 | ✅ Clean (WTM removed 16 posts) |
-| **howzitza.co.za** | 14 | **14** ✅ | 1,600+ | 14 | ✅ Clean |
-| **saymyname.co.za** | 29 | **29** ✅ | 1,600+ | **29** | ✅ **FIXED 2026-08-19** (removed byte-identical boilerplate from 20 posts + all 29 posts now have 2 real CC images) |
-| **5minutes.co.za** | 28 | **28** ✅ | 1,500+ | 28 | ✅ Clean (7 posts top-upped) |
-| **whippetqr.com** | 37 | **37** ✅ | 1,800+ | 37 | ✅ Clean |
-| **zadocs.co.za** | 65 | **65** ✅ | 1,500+ | 65 | ✅ **REWRITTEN 2026-08-07** (was 63 template shells) |
-| **beanel.com** | 32 | **32** ✅ | 1,800+ | 32 | ✅ Clean (WTM removed 28 posts) |
-| **Total** | **236** | **236** | **1,600+ avg** | **236** | **✅ 100% CLEAN** |
+| Site | Posts | @1,500+ | Images | Auditor status (2026-08-20) |
+|------|:-----:|:-------:|:------:|:-------|
+| **sumza.co.za** | 35 | ✅ | ✅ | ❌ 4 template shells + 3 dup H2s |
+| **howzitza.co.za** | 18 | ✅ | 3 posts <2 | ❌ only 18 posts (need 30+), 1 dup H2, 1 template shell, 1 Uncategorized |
+| **saymyname.co.za** | 29 | **4 posts <1,500** | 1 post <2 | ❌ only 29 posts (need 30+), 4 short posts |
+| **5minutes.co.za** | 32 | ✅ | 3 posts <2 | ❌ 3 template shells (16+16+6 posts) |
+| **whippetqr.com** | 40 | ✅ | 3 posts <2 | ❌ 13 dup H2s + 2 template shells |
+| **zadocs.co.za** | 69 | ✅ | 3 posts <2 | ❌ 3 posts <2 images, 7 posts boilerplate markers |
+| **beanel.com** | 36 | ✅ | 2 posts <2 | ❌ 2 posts <2 images |
+| **Total** | **259** | | | **❌ 0/7 fully ready** |
 
 ## Recent Work (2026-08-18)
 - **Weekly Blog Posts backfill (COMPLETE):** Machine was off Aug 10–15; the Tue Aug 11 weekly cron missed. Triggered manually — 7 articles published (1/site), all verified live (HTTP 200), 2 distinct in-content images each, correctly positioned, real categories, in sitemaps. See `2026-08-18-weekly-blog-backfill-image-fixes-ceo-maintenance.md`.

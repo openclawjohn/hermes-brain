@@ -1,6 +1,6 @@
 # RULES.md — Portfolio of 7 South African Domains
 
-**Last Updated:** 2026-08-03
+**Last Updated:** 2026-08-20
 **Purpose:** Mandatory development rules, quality gates, and workflow constraints for all 7 portfolio sites.
 
 ---
@@ -61,6 +61,19 @@ Every task requires:
 - **Always purge before verifying:** `\LiteSpeed\Purge::purge_all();` + `do_action('litespeed_purge_all');` via a PHP script, THEN re-test the URL. Only trust the redirect/URL behavior after cache is purged.
 - This is the same trap as the beanel map — cached server state lies about whether a fix took effect.
 - **🚨 CRITICAL (2026-08-18):** `\LiteSpeed\Purge::purge_all()` + `do_action('litespeed_purge_all')` do NOT always clear the server page cache. The actual server cache lives at **`/home/whippetq/lscache`** (NOT `wp-content/litespeed`). If a page stays stale after `purge_all`, delete the files under `/home/whippetq/lscache` via a PHP `rrmdir()` script to force a fresh render. This was required to make the 5minutes post-138 expansion show up.
+
+### 11. CEO Dispatch Rules — How to Make the CEO Actually Deliver (2026-08-20)
+**The failure:** On 2026-08-20, every CEO subagent hit its tool-call iteration cap and made ZERO changes — they burned the whole budget on recon/analysis and ran out of calls before fixing anything. Verified by re-auditing (counts identical before/after).
+
+**The fix — the dispatcher (parent agent) MUST follow these rules when spawning a CEO:**
+1. **ONE narrow task per dispatch — never a list.** A CEO given 5–6 issues analyzes everything and runs out of calls. If a site has 6 issues, dispatch 6 CEOs, each with a single bounded task.
+2. **Pre-fetch the content and hand it to the CEO in `context`.** The biggest waste was recon (10+ calls fetching posts, mapping H2s). The parent fetches the affected posts' content and passes it in `context` — the CEO's first tool call should be the fix, not a fetch.
+3. **Give the exact fix method, not a mandate.** Hand the CEO the proven one-shot PHP script pattern (`$wpdb->update` + cache purge + delete-script) so they deploy in a single script, not a chain of exploratory calls.
+4. **Bound the scope to ~10–15 tool calls.** fetch (pre-provided) → write PHP → upload → run → verify → delete. No open-ended analysis.
+5. **Verify independently — never trust the self-report.** The auditor is the source of truth. Re-run it after any CEO run. If a CEO claims "done" but the auditor still fails, fix it directly rather than re-dispatching.
+6. **Fall back to direct work when delegation fails.** Direct PHP/FTP work always delivered; delegation often didn't. Default for content fixes is doing it directly. Only delegate when genuinely parallelizable AND small enough to fit the budget.
+
+**The CEO is not incapable — it was dispatched wrong.** One narrow task, pre-fetched content, exact fix method, bounded scope, independent verification, direct-work fallback. This is the only configuration that reliably delivers.
 
 ---
 

@@ -1,16 +1,30 @@
 # Portfolio Sites — Project State
 ## Updated: 2026-08-20
 
-## Recent Work (2026-08-20)
-- **Independent AdSense Auditor built + first run (COMPLETE):** Built a standalone from-scratch auditor at `~/.hermes/scripts/adsense-auditor.py` (backed up to `github.com/openclawjohn/hermes-backup` branch `feature/adsense-auditor`). It re-checks every AdSense gate item independently against the live site — does NOT trust prior "clean" status. Uses the corrected stripped-text full-section hash for template-shell detection. Ran across all 7 sites in 154s. **Result: NONE of the 7 sites is fully AdSense-ready.** The 2026-08-08 "ALL SITES CLEAN" claim was WRONG — the auditor surfaced byte-identical template shells on 5minutes (16 posts), sumza, whippetqr, and howzitza that the prior audit missed. See `2026-08-20-independent-adsense-auditor.md`.
-- **KEY FINDINGS (verified, not false positives):**
-  - **5minutes:** 3 template shells — "The Educational Value of Quick Games" ×16 (436w byte-identical, 1 hash), "Why These Quick Games Matter" ×16, "Making the Most of Your Game Time" ×6
-  - **sumza:** 4 template shells ("Common Misconceptions" ×13, "Practical Next Steps" ×5, "Summary" ×5, "UIF Claims Process" ×2) + 3 duplicate H2s
-  - **whippetqr:** 13 duplicate H2s + 2 template shells ("FAQ About QR Codes" ×6 = 971w identical, "Practical Tips" ×3)
-  - **howzitza:** only 18 posts (need 30+), 1 dup H2, 1 template shell, 1 Uncategorized post, 3 image-less posts
-  - **saymyname:** only 29 posts (need 30+), 4 posts under 1,500 words, 1 image-less post
-  - **beanel:** 2 posts <2 images; **zadocs:** 3 posts <2 images + 7 posts boilerplate markers
-- **KEY LEARNING:** The 2026-08-08 "ALL SITES CLEAN" was based on the flawed raw-HTML hash methodology. The independent auditor (stripped-text full-section hash) is now the source of truth. Re-run it after any fix to confirm 0 FAILs.
+## Recent Work (2026-08-20) — ALL 7 SITES PASS THE AUDITOR
+- **Independent AdSense Auditor built + first run (COMPLETE):** Built a standalone from-scratch auditor at `~/.hermes/scripts/adsense-auditor.py`. It re-checks every AdSense gate item independently against the live site — does NOT trust prior "clean" status. Uses the corrected stripped-text full-section hash for template-shell detection. See `2026-08-20-independent-adsense-auditor.md`.
+- **All content blockers FIXED (COMPLETE):** Template shells rewritten unique, duplicate H2s removed, short posts topped up, Uncategorized posts categorized, 13 new 1,500+ articles published (howzitza 18→30, saymyname 29→30), sitemaps regenerated. 2 distinct inspected CC photos deployed to every image-deficient post across all 7 sites.
+- **Auditor "Internet University" upgrade (COMPLETE):** Researched Google's authoritative AdSense requirements (Publisher Policies, site-readiness checklist, inventory-value policies). Added 5 new policy-based checks: `privacy_policy`, `contact_page`, `navigation` (Articles link), `ad_density`, `replication`.
+- **Navigation fixes (COMPLETE):** The new `navigation` check flagged 3 sites missing an "Articles" link. Fixed: howzitza ("ZA Culture"→"Articles"), zadocs (added "Articles"), whippetqr (added "Articles" to hardcoded Elementor nav). All verified live.
+- **CEO dispatch rules codified (COMPLETE):** The CEO subagents failed completely on 2026-08-20 (all hit iteration caps, made zero changes). Codified the fix into `adsense-quality-debug` and `ceo-of-domains` skills: ONE narrow task per dispatch, pre-fetch content into context, give exact fix method, bound scope to ~10-15 calls, verify independently, fall back to direct work.
+- **FINAL AUDIT RESULT: ALL 7 SITES PASS with 0 FAILs.** See `2026-08-20-auditor-internet-university-ceo-dispatch-rules.md`.
+
+## All 7 Sites — Content Status (2026-08-20 FINAL)
+
+> **✅ ALL 7 SITES PASS the independent AdSense auditor with 0 FAILs.** Every gate check passes: post count (30+), word floor (1,500+), no duplicate H2s, no template shells, no Uncategorized, sitemap↔REST match, no broken URLs, no `-2` slugs, essential pages 200, ads.txt, AdSense meta, noindex, GA4, canonical, OG, favicon, SSL redirect, 2+ images, privacy policy, contact page, Articles nav, ad density, replication.
+
+| Site | Posts | @1,500+ | Images | Auditor status (2026-08-20 FINAL) |
+|------|:-----:|:-------:|:------:|:-------|
+| **sumza.co.za** | 35 | ✅ | ✅ | ✅ 0 FAILs |
+| **howzitza.co.za** | 30 | ✅ | ✅ | ✅ 0 FAILs |
+| **saymyname.co.za** | 30 | ✅ | ✅ | ✅ 0 FAILs |
+| **5minutes.co.za** | 32 | ✅ | ✅ | ✅ 0 FAILs |
+| **whippetqr.com** | 40 | ✅ | ✅ | ✅ 0 FAILs |
+| **zadocs.co.za** | 69 | ✅ | ✅ | ✅ 0 FAILs |
+| **beanel.com** | 36 | ✅ | ✅ | ✅ 0 FAILs |
+| **Total** | **272** | | | **✅ 7/7 ready** |
+
+Remaining WARNs (non-blocking, not AdSense gate failures): `boilerplate` on zadocs/saymyname/whippetqr/5minutes (verified natural prose, not byte-identical template shells — false positives).
 
 ## Recent Work (2026-08-19)
 - **SayMyName low-value-content fix (COMPLETE):** Google flagged saymyname for "Low value content." Root cause was **byte-identical boilerplate sections** reused across 20 of 29 articles ("The Significance/Importance of Names in South African Culture", "More About African Naming Traditions", "Choosing a Business Name") — the correct stripped-text hash test proved them factory copies. Authored unique 1,500+ word top-ups for all 20, removed all boilerplate, deployed via direct `$wpdb->update`, purged LiteSpeed. **Verified: 0 boilerplate sections remain, all 20 posts ≥1,500 words.** Earlier "Clean" status was wrong (hashed raw HTML, not stripped text). See `2026-08-19-saymyname-low-value-content-fix.md`.

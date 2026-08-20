@@ -1,5 +1,10 @@
 # Portfolio Sites — Project State
-## Updated: 2026-08-18
+## Updated: 2026-08-19
+
+## Recent Work (2026-08-19)
+- **SayMyName low-value-content fix (COMPLETE):** Google flagged saymyname for "Low value content." Root cause was **byte-identical boilerplate sections** reused across 20 of 29 articles ("The Significance/Importance of Names in South African Culture", "More About African Naming Traditions", "Choosing a Business Name") — the correct stripped-text hash test proved them factory copies. Authored unique 1,500+ word top-ups for all 20, removed all boilerplate, deployed via direct `$wpdb->update`, purged LiteSpeed. **Verified: 0 boilerplate sections remain, all 20 posts ≥1,500 words.** Earlier "Clean" status was wrong (hashed raw HTML, not stripped text). See `2026-08-19-saymyname-low-value-content-fix.md`.
+- **SayMyName image pass (COMPLETE):** All 23 saymyname articles that lacked 2 images now have **2 distinct, on-topic, real CC-licensed Wikimedia photos** each (hero top + in-content ~55%). Sourced via Wikimedia Commons API + mandatory `vision_analyze` pixel inspection (rejected elephants, "AMERICAN CULTURE" sign, numbered headbands, boaters/QR watermarks). Uploaded via FTP, deployed featured + embedded content `<figure>` via PHP (theme ignores `featured_media`, so hero must be in-content), deduped double-embeds, purged LiteSpeed. **Verified: 2 distinct images render on all 29 articles (curl, 0 issues).** Temp PHP scripts deleted.
+- **KEY LEARNING:** The template-shell detection MUST hash **stripped plain text** per section, NOT raw HTML. Raw HTML differs (image tags/whitespace) even when the text is a copy-paste, which caused saymyname to be falsely marked "Clean" on 2026-08-08/18.
 
 ## All 7 Sites — Content Status
 
@@ -9,7 +14,7 @@
 |------|:-----:|:-------:|:---------:|:------:|:-------|
 | **sumza.co.za** | 31 | **31** ✅ | 1,600+ | 31 | ✅ Clean (WTM removed 16 posts) |
 | **howzitza.co.za** | 14 | **14** ✅ | 1,600+ | 14 | ✅ Clean |
-| **saymyname.co.za** | 29 | **29** ✅ | 1,600+ | 29 | ✅ Clean |
+| **saymyname.co.za** | 29 | **29** ✅ | 1,600+ | **29** | ✅ **FIXED 2026-08-19** (removed byte-identical boilerplate from 20 posts + all 29 posts now have 2 real CC images) |
 | **5minutes.co.za** | 28 | **28** ✅ | 1,500+ | 28 | ✅ Clean (7 posts top-upped) |
 | **whippetqr.com** | 37 | **37** ✅ | 1,800+ | 37 | ✅ Clean |
 | **zadocs.co.za** | 65 | **65** ✅ | 1,500+ | 65 | ✅ **REWRITTEN 2026-08-07** (was 63 template shells) |

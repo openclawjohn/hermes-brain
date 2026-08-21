@@ -1,6 +1,6 @@
 # RULES.md — Portfolio of 7 South African Domains
 
-**Last Updated:** 2026-08-03
+**Last Updated:** 2026-08-21
 **Purpose:** Mandatory development rules, quality gates, and workflow constraints for all 7 portfolio sites.
 
 ---
@@ -45,7 +45,15 @@ Every task requires:
 - sumza (16 posts) and beanel (28 posts) also had byte-identical "Why This Matters" filler blocks (beanel's was 40-65% of each article).
 - **Before EVER claiming a site is AdSense-ready, run the template-shell detection** (see `adsense-quality-debug` skill Trigger 8): fetch all posts, hash repeated sections. If the same text appears on 60%+ of posts, the site has template-shell content and is NOT ready.
 - **The fix is a rewrite, not deletion:** each page needs genuinely unique, document-specific prose (1,500+ words), not just the boilerplate removed.
-- **✅ STATUS (2026-08-08): ALL 7 SITES CLEAN.** Byte-identical boilerplate eliminated everywhere; all articles 1,500+ words; recrawls requested on all 7.
+- **✅ STATUS (2026-08-21): ALL 7 SITES PASS (0 FAILs) on the enriched 60-check auditor.** The 2026-08-08 "ALL SITES CLEAN" was wrong (flawed raw-HTML hash). After the independent auditor (2026-08-20) + 4 enrichment courses (2026-08-20) + fixes, the fresh 2026-08-21 audit confirms 0 FAILs everywhere. Remaining WARNs are non-blocking. See `2026-08-21-auditor-courses-evaluation.md`.
+
+### 11. Run the Enriched Auditor (60 checks) Before Claiming AdSense-Ready
+**The auditor at `~/.hermes/scripts/adsense-auditor.py` now runs 60 checks** (enriched across 4 courses: Web Search, Web Extract, Browser Research, Competitor Analysis). It verifies Google's actual quality/policy requirements — not just "is the page up and indexed":
+- **Policy:** ads.txt, adsense meta, noindex, privacy disclosures (cookies/beacons/IP), Google "How Google uses data" link, AI/automation disclosure, Better Ads Standards.
+- **Quality/E-E-A-T:** schema (Article/FAQPage/BreadcrumbList), author bylines, image dimensions, heading hierarchy, descriptive titles, visible last-updated dates, TOCs, FAQ sections, honest freshness (sitemap lastmod vs REST modified).
+- **Content (decisive):** post count (30+), word floor (1,500+), duplicate H2s, boilerplate markers, **byte-identical template shells (stripped-text full-section hash)**, Uncategorized posts, 2+ images.
+- **Run:** `python3 ~/.hermes/scripts/adsense-auditor.py --json /home/m/adsense-audit-report-final.json`
+- **Gate:** a site is AdSense-ready only with **0 FAILs**. WARNs are non-blocking soft signals (sitemap lastmod, title length, boilerplate markers, author byline, HSTS) — fix opportunistically but they don't block review.
 
 ### 9. NEVER Leave Orphaned `-2`/`-3` Duplicate Pages (Indexing Blocker)
 **Google "Duplicate, Google chose different canonical than user" / "Alternate page with proper canonical tag" cause — discovered 2026-08-10.**

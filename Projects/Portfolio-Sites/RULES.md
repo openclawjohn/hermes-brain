@@ -62,6 +62,15 @@ Every task requires:
 - This is the same trap as the beanel map — cached server state lies about whether a fix took effect.
 - **🚨 CRITICAL (2026-08-18):** `\LiteSpeed\Purge::purge_all()` + `do_action('litespeed_purge_all')` do NOT always clear the server page cache. The actual server cache lives at **`/home/whippetq/lscache`** (NOT `wp-content/litespeed`). If a page stays stale after `purge_all`, delete the files under `/home/whippetq/lscache` via a PHP `rrmdir()` script to force a fresh render. This was required to make the 5minutes post-138 expansion show up.
 
+### 11. Security & Technical SEO Gates (Course 9, 2026-08-21)
+**Every site must pass these security/technical-SEO gates (auditor checks `tls_version`, `mixed_content`, `redirect_chain`, `security_headers_full`, `cookie_consent`, `canonical_conflict`):**
+- **TLS 1.2+** required (TLS 1.3 preferred). All 7 sites are TLS 1.3.
+- **No mixed content** — HTTPS pages must not load `http://` resources.
+- **Single-hop http→https 301 redirect** — no redirect chains.
+- **Full security headers** — XCTO, XFO, Referrer-Policy, Permissions-Policy, HSTS. **⚠️ LiteSpeed sends lowercase header names** — always lowercase keys when reading headers (`{k.lower(): v for k,v in hdrs.items()}`), or the check falsely WARNs.
+- **Cookie consent banner** — required for GDPR/EEA ad serving. beanel/whippetqr use cookie-law-info; zadocs uses complianz-gdpr; howzitza/sumza/saymyname/5minutes use the `portfolio-cookie-consent.php` mu-plugin.
+- **Exactly ONE canonical tag** per page. **⚠️ Custom theme SEO functions can conflict with WP core canonical** — sumza's theme emitted 3 canonicals. Always verify canonical count == 1.
+
 ---
 
 ## 📋 Per-Domain Quality Gates

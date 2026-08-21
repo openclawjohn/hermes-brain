@@ -1,5 +1,12 @@
 # Portfolio Sites — Project State
-## Updated: 2026-08-20
+## Updated: 2026-08-21
+
+## Recent Work (2026-08-21) — Auditor Course 9: Security & Technical SEO
+- **Course 9 (Security & Technical SEO Deep Dive) COMPLETE:** Researched Google Search Central docs (HTTPS/TLS, canonical, robots-meta, url-structure, redirects) + OWASP security headers + GDPR/consent. Added **6 new checks** to the auditor: `tls_version`, `mixed_content`, `redirect_chain`, `security_headers_full`, `cookie_consent`, `canonical_conflict`. (Note: web_search/web_extract tools were down — firecrawl key unset — so research used direct curl.)
+- **Found + fixed (directly via FTP/PHP):**
+  - **sumza.co.za canonical conflict (FAIL):** theme `functions.php` had 3 custom SEO functions emitting duplicate canonicals. Removed the 3 duplicate `<link rel="canonical">` echo lines (kept meta desc/OG). Now 1 canonical.
+  - **Cookie consent missing on howzitza, sumza, saymyname, 5minutes (WARN):** deployed a self-contained `portfolio-cookie-consent.php` mu-plugin (Accept/Reject banner + consent cookie) to all 4 sites. Purged LiteSpeed.
+- **Re-audit: ALL 7 SITES 0 FAILs.** See `2026-08-21-auditor-course9-security-seo.md`.
 
 ## Recent Work (2026-08-20)
 - **Independent AdSense Auditor built + first run (COMPLETE):** Built a standalone from-scratch auditor at `~/.hermes/scripts/adsense-auditor.py` (backed up to `github.com/openclawjohn/hermes-backup` branch `feature/adsense-auditor`). It re-checks every AdSense gate item independently against the live site — does NOT trust prior "clean" status. Uses the corrected stripped-text full-section hash for template-shell detection. Ran across all 7 sites in 154s. **Result: NONE of the 7 sites is fully AdSense-ready.** The 2026-08-08 "ALL SITES CLEAN" claim was WRONG — the auditor surfaced byte-identical template shells on 5minutes (16 posts), sumza, whippetqr, and howzitza that the prior audit missed. See `2026-08-20-independent-adsense-auditor.md`.

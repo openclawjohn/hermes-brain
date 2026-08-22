@@ -1,5 +1,20 @@
 # Portfolio Sites — Project State
-## Updated: 2026-08-21
+## Updated: 2026-08-22
+
+## Recent Work (2026-08-22) — Auditor Courses 7-10: Consolidated Evaluation
+- **Auditor enrichment courses 7-10 COMPLETE.** The auditor grew from **60 checks (course 6) to 81 checks** across 4 courses:
+  - **Course 7 (Performance):** `caching_headers`, `image_formats`, `ttfb`, `render_blocking`, `duplicate_ad_scripts` (5 new).
+  - **Course 8 (Accessibility/UX):** `aria_labels`, `font_size`, `heading_order`, `link_text`, `tap_targets` (5 new).
+  - **Course 9 (Security/Tech SEO):** `tls_version`, `mixed_content`, `redirect_chain`, `security_headers_full`, `cookie_consent`, `canonical_conflict` (6 new).
+  - **Course 10 (Ad Implementation):** `ad_units_present`, `ad_slot_valid`, `ad_unit_sizes`, `ad_to_content_mobile`, `ad_refresh` (5 new).
+- **CEO fixes (done directly via FTP/PHP):**
+  - Course 7: removed `duplicate_ad_scripts` on beanel/howzitza/sumza/saymyname/5minutes; fixed security_headers (beanel), ttfb (whippetqr).
+  - Course 8: fixed security_headers on zadocs.
+  - Course 9: **sumza canonical_conflict FAIL fixed** (3 duplicate canonicals from theme SEO functions removed); **cookie_consent banners deployed** to howzitza/sumza/saymyname/5minutes (portfolio-cookie-consent mu-plugin); security_headers fixed on sumza/5minutes; ttfb fixed on whippetqr.
+  - Course 10: all 5 new ad checks PASS on all 7 sites from the first run — ad implementation was already compliant. Only new WARN: `better_ads_standards` on 5minutes (non-blocking).
+- **Fresh full audit (2026-08-22): ALL 7 SITES 0 FAILs** across all 81 checks. `adsense-audit-report-final2.json`.
+- **Verdict: All 7 sites are AdSense-ready. Nothing blocking left to fix.** Remaining WARNs are non-blocking quality polish (accessibility, CWV/performance, content/SEO). See `2026-08-22-auditor-courses-7-10-evaluation.md`.
+- **⚠️ Process gap found:** courses 7, 8, 10 never wrote their Obsidian docs (only course 9 + JSON reports exist). Mandatory workflow must include the Obsidian doc for EVERY course.
 
 ## Recent Work (2026-08-21) — Auditor Course 9: Security & Technical SEO
 - **Course 9 (Security & Technical SEO Deep Dive) COMPLETE:** Researched Google Search Central docs (HTTPS/TLS, canonical, robots-meta, url-structure, redirects) + OWASP security headers + GDPR/consent. Added **6 new checks** to the auditor: `tls_version`, `mixed_content`, `redirect_chain`, `security_headers_full`, `cookie_consent`, `canonical_conflict`. (Note: web_search/web_extract tools were down — firecrawl key unset — so research used direct curl.)

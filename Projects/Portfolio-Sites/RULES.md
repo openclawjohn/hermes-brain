@@ -71,6 +71,14 @@ Every task requires:
 - **Cookie consent banner** — required for GDPR/EEA ad serving. beanel/whippetqr use cookie-law-info; zadocs uses complianz-gdpr; howzitza/sumza/saymyname/5minutes use the `portfolio-cookie-consent.php` mu-plugin.
 - **Exactly ONE canonical tag** per page. **⚠️ Custom theme SEO functions can conflict with WP core canonical** — sumza's theme emitted 3 canonicals. Always verify canonical count == 1.
 
+### 12. Performance, Accessibility & Ad-Implementation Gates (Courses 7, 8, 10, 2026-08-21)
+**Added by courses 7-10 — quality/optimization gates. These are WARN-level (non-blocking) unless they escalate to FAIL.**
+- **Performance (Course 7):** `caching_headers`, `image_formats`, `ttfb`, `render_blocking`, `duplicate_ad_scripts`. Optimize Core Web Vitals: enable caching headers, modern image formats (WebP/AVIF), remove render-blocking resources, keep TTFB low, ensure NO duplicate ad scripts per page.
+- **Accessibility (Course 8):** `aria_labels`, `font_size`, `heading_order`, `link_text`, `tap_targets`. WCAG: proper ARIA labels, adequate font sizes, correct heading order, descriptive link text, mobile tap targets ≥ 44px.
+- **Ad Implementation (Course 10):** `ad_units_present`, `ad_slot_valid`, `ad_unit_sizes`, `ad_to_content_mobile`, `ad_refresh`. Compliant ad placement: valid ad slots/units, correct unit sizes, acceptable ad-to-content ratio on mobile, no over-aggressive refresh. All 7 sites PASS these from the first run.
+- **✅ STATUS (2026-08-22):** All 7 sites pass all 81 checks with **0 FAILs** (fresh audit in `adsense-audit-report-final2.json`). Remaining WARNs are non-blocking quality polish.
+- **⚠️ MANDATORY PROCESS RULE:** Every enrichment course must write its **Obsidian doc + update PROJECT_STATE/RULES** as part of the course run — NOT just the JSON audit report. Courses 7, 8, 10 dropped this; only course 9 + JSON reports survived. Fix the course workflow so the doc is non-negotiable per course.
+
 ---
 
 ## 📋 Per-Domain Quality Gates

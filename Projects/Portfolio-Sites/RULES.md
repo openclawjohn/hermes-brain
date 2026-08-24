@@ -79,6 +79,17 @@ Every task requires:
 - **✅ STATUS (2026-08-22):** All 7 sites pass all 81 checks with **0 FAILs** (fresh audit in `adsense-audit-report-final2.json`). Remaining WARNs are non-blocking quality polish.
 - **⚠️ MANDATORY PROCESS RULE:** Every enrichment course must write its **Obsidian doc + update PROJECT_STATE/RULES** as part of the course run — NOT just the JSON audit report. Courses 7, 8, 10 dropped this; only course 9 + JSON reports survived. Fix the course workflow so the doc is non-negotiable per course.
 
+### 13. Fix-Everything WARN-Cleanup Gates (2026-08-24)
+**Full cleanup pass cleared the 56 WARNs left by courses 7-10. Reusable fixes that now apply to all 7 sites:**
+- **Cache-Control headers** — all 7 sites send `Cache-Control` (HTML `no-cache, must-revalidate`, static `public, max-age=31536000, immutable`) via `.htaccess`. ⚠️ LiteSpeed's `RewriteRule .* - [E=Cache-Control:no-autoflush]` is an internal E-var, NOT a real header — you must add the actual `<FilesMatch>`/`Header set` block for the `caching_headers` check to pass.
+- **Author bylines** — beanel + whippetqr emit `meta author`/`rel=author`/`article:author` via `portfolio-author-byline` mu-plugin. ⚠️ Posts with `author=0` need a fallback to `get_bloginfo('name')`.
+- **Sitemap lastmod** — regenerated static sitemaps WITH `<lastmod>` (post_modified_gmt). The `sitemap_lastmod` + `modified_dates_consistent` checks pass when lastmod present + recent.
+- **A11y + perf** — `portfolio-a11y-perf` mu-plugin: font-size floor (16px), tap-target ≥44px, defer non-critical scripts (never defer jquery/elementor/qrcode/emoji/ad scripts).
+- **WebP images** — on-server GD converter + `portfolio-webp-wrap` mu-plugin (wrap `<img>` in `<picture><source type="image/webp">`). ⚠️ howzitza/whippetqr keep article images in `/adsense-imgs/` at DOCROOT (`ABSPATH.'adsense-imgs'`), NOT `wp-content/uploads` — converter must walk BOTH. ⚠️ Purge LiteSpeed after (stale page cache hides the picture-wrap).
+- **ARIA labels** — `portfolio-aria-labels` mu-plugin: `nav_menu_link_attributes` filter + JS fallback. ⚠️ Auditor reads raw HTML, so only server-side output counts toward `aria_labels`.
+- **🚨 PITFALL — trimming titles can CREATE duplicate titles:** renaming 5minutes post 494 to "Fun Icebreaker Games for South African Parties" collided with post 204's existing title → `duplicate_titles` FAIL. Always check for an existing post with the same title BEFORE renaming, and re-run `duplicate_titles` after any title change.
+- **✅ STATUS (2026-08-24):** All 7 sites pass with **0 FAILs**. WARNs reduced from 56 → ~23 (remaining are `aria_labels` [JS-only labels invisible to raw HTML], `boilerplate` markers [natural prose], `title_descriptive` residual, `ttfb` on saymyname, `sitemap_lastmod` on sumza, `heading_order` on whippetqr).
+
 ---
 
 ## 📋 Per-Domain Quality Gates

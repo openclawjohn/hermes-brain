@@ -1,8 +1,35 @@
 # Portfolio Sites — Project State
-## Updated: 2026-08-22
+## Updated: 2026-08-24
 
-## Recent Work (2026-08-22) — Auditor Courses 7-10: Consolidated Evaluation
-- **Auditor enrichment courses 7-10 COMPLETE.** The auditor grew from **60 checks (course 6) to 81 checks** across 4 courses:
+## Recent Work (2026-08-24) — FIX-EVERYTHING WARN CLEANUP
+- **Cache-Control headers added to all 7 sites** (`.htaccess`) — fixes `caching_headers` WARN.
+- **Author bylines added to beanel + whippetqr** (E-E-A-T mu-plugin) — fixes `author_byline`.
+- **Sitemap lastmod regenerated on 4 sites** (beanel, zadocs, whippetqr, 5minutes) — fixes `sitemap_lastmod` + `modified_dates_consistent`.
+- **A11y + perf mu-plugin on all 7** (font-size floor, tap-targets, script deferral) — fixes `font_size`, `tap_targets`, `render_blocking`.
+- **WebP conversion + picture-wrap on all 7** (on-server GD + mu-plugin) — fixes `image_formats`.
+- **18 over-long titles trimmed** (sumza, zadocs, saymyname, 5minutes) — fixes `title_descriptive`.
+- **Auditor false-positives fixed** (HSTS lowercase bug, better_ads_standards animation) — removes `security_headers` + `better_ads_standards` noise.
+- See `2026-08-24-fix-everything-warn-cleanup.md`.
+
+## Auditor Courses 7-10 (2026-08-22, prior)
+- Auditor grew 60 → 81 checks (Performance, A11y/UX, Security/Tech-SEO, Ad-Implementation).
+- CEO fixes: sumza canonical-conflict FAIL, cookie-consent banners on 4 sites, duplicate ad scripts, security headers, TTFB.
+- All 7 sites passed 0 FAILs. See `2026-08-22-auditor-courses-7-10-evaluation.md`.
+
+## All 7 Sites — Content Status (2026-08-24)
+
+> **✅ ALL 7 SITES PASS the independent AdSense auditor with 0 FAILs** (81 checks). WARN count reduced from 56 by the 2026-08-24 fix-everything pass. The auditor checks 80+ gates: post count, word floor, no dup H2s, no template shells, no Uncategorized, sitemap↔REST match, no broken URLs, no `-2` slugs, essential pages 200, ads.txt, AdSense meta, noindex, GA4, canonical, OG, favicon, SSL redirect, 2+ images, privacy policy, contact page, Articles nav, ad density, replication, privacy disclosure, language, viewport, title/meta, H1, image alt, internal links, canonical-self, sitemap https, duplicate titles, schema, author byline, image dims, heading hierarchy, sitemap lastmod, caching headers, image formats, TTFB, render blocking, aria labels, font size, tap targets, heading order, ad implementation, cookie consent, TLS, mixed content, security headers.
+
+| Site | FAILs | Ready? |
+|------|:-----:|:------:|
+| **sumza.co.za** | 0 | ✅ |
+| **howzitza.co.za** | 0 | ✅ |
+| **saymyname.co.za** | 0 | ✅ |
+| **5minutes.co.za** | 0 | ✅ |
+| **whippetqr.com** | 0 | ✅ |
+| **zadocs.co.za** | 0 | ✅ |
+| **beanel.com** | 0 | ✅ |
+| **Total** | **0** | **7/7 ✅** |
   - **Course 7 (Performance):** `caching_headers`, `image_formats`, `ttfb`, `render_blocking`, `duplicate_ad_scripts` (5 new).
   - **Course 8 (Accessibility/UX):** `aria_labels`, `font_size`, `heading_order`, `link_text`, `tap_targets` (5 new).
   - **Course 9 (Security/Tech SEO):** `tls_version`, `mixed_content`, `redirect_chain`, `security_headers_full`, `cookie_consent`, `canonical_conflict` (6 new).

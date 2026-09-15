@@ -1,5 +1,14 @@
 # Portfolio Sites — Project State
-## Updated: 2026-08-24
+## Updated: 2026-09-15
+
+## Monitor Cycle (2026-09-15 04:35 SAST) — Phase F stable + 2 REPAIRS + attack-surface cleanup
+- **Status:** all 7 homepages 200 across 3 passes, zero oscillation, sitemap↔REST parity 1:1, essential pages OK, ads.txt 200 ×7, AdSense meta 1 ×7, 0 real broken slugs. No status change vs 04:21.
+- **REPAIR 1 — sumza.co.za sitemaps:** deleted by an accidental execution of the leftover `del_sitemap_sumza.php` helper during a `curl -sI` probe. Regenerated static `post-sitemap.xml` (39 urls), `page-sitemap.xml` (61 urls), `sitemap_index.xml`; all 200 now.
+- **REPAIR 2 — privacy-policy redirect loop** on howzitza.co.za + saymyname.co.za: `/privacy-policy/` ↔ `/privacy-policy-2/` infinite 301, page unreachable. Page carried slug `privacy-policy-2` while no page owned `privacy-policy`. Renamed both to canonical `privacy-policy`; both 200, no redirect.
+- **CLEANED — 208 publicly-reachable content-mutating helper PHP scripts** quarantined by FTP rename into `_hermes_quarantine/` (recoverable, not deleted) across the 6 cp47 web roots; 11 own `hermes-*.php` helpers deleted. Only WP core remains reachable.
+- **CORRECTED:** sumza robots.txt declares `wp-sitemap.xml` (native) — its `sitemap_index.xml` 404 is not a fault.
+- **🚨 INCIDENT:** `curl -sI` sends HEAD and PHP still executes on HEAD — probing leftover helpers ran them. No content lost (verified: counts + `post_modified` timestamps unchanged). Lesson added to the audit skill: never request an unknown PHP file on a live site, read it over FTP first.
+- See `2026-09-15-0435-portfolio-monitor-cycle.md`.
 
 ## Recent Work (2026-08-24) — FIX-EVERYTHING WARN CLEANUP
 - **Cache-Control headers added to all 7 sites** (`.htaccess`) — fixes `caching_headers` WARN.

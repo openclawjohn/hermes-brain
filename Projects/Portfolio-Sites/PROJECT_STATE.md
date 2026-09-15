@@ -89,6 +89,10 @@
 - **Phase 3 maintenance (COMPLETE):** All 7 sites up; IndexNow keys/sitemaps/ads.txt all 200; AdSense meta present; no broken slugs; no missing alt text; all 7 new articles in sitemaps.
 - **KEY LEARNING — LiteSpeed cache:** `\LiteSpeed\Purge::purge_all()` + `do_action('litespeed_purge_all')` do NOT clear the server page cache. Actual cache is at **`/home/whippetq/lscache`** (NOT `wp-content/litespeed`). Must delete files there via PHP `rrmdir()` to force fresh render.
 
+## Recent Work (2026-09-15)
+- **Portfolio monitor cycle 04:21 SAST (Phase F maintenance, stable):** All 7 sites 200 across 2 passes, zero oscillation. Sitemap↔REST parity 1:1 on all 7 (40/34/39/73/34/44/36). ads.txt 200 + correct pub ID on all 7. AdSense meta tag = 1 on all 7. Essential pages all 200. Zero `-2`/`-3` slugs. Delta vs 02:14 cycle: +1 article per site from the external weekly-articles cron (02:47 SAST) — content operation, not a recovery signal.
+- **Housekeeping (completed from previous run's unfinished list):** deleted orphaned `saymyname.co.za/topup2.php` via FTP (0-byte but publicly reachable HTTP 200; now 404). Verified `topup_zadocs.php`/`topup_5minutes.php`/`howzitza topup.php` already absent. See `2026-09-15-0421-portfolio-monitor-cycle.md`.
+
 ## Recent Work (2026-08-10)
 - **Indexing/canonical duplicate fix (COMPLETE):** Google emailed about saymyname "cannot be indexed — Duplicate, Google chose different canonical." Audited ALL 7 sites' Google emails + live GSC indexing reports. Root cause: orphaned `-2` duplicate pages self-canonicalizing in sitemaps. Fixed on 3 sites:
   - **saymyname**: renamed `privacy-policy-2` → `privacy-policy` (deleted draft), mu-plugin redirect old slug

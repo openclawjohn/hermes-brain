@@ -1,0 +1,16 @@
+{
+  "cycle": "2026-09-15 02:14 SAST",
+  "regime": "Phase F maintenance (stable)",
+  "homepages": {"beanel.com": 200, "howzitza.co.za": 200, "sumza.co.za": 200, "zadocs.co.za": 200, "saymyname.co.za": 200, "whippetqr.com": 200, "5minutes.co.za": 200},
+  "passes": 2,
+  "oscillation": false,
+  "rest_posts": {"beanel.com": 39, "howzitza.co.za": 33, "sumza.co.za": 38, "zadocs.co.za": 72, "saymyname.co.za": 33, "whippetqr.com": 43, "5minutes.co.za": 35},
+  "sitemap_locs": {"beanel.com": 39, "howzitza.co.za": 33, "sumza.co.za": 38, "zadocs.co.za": 72, "saymyname.co.za": 33, "whippetqr.com": 43, "5minutes.co.za": 35},
+  "sitemap_rest_parity": true,
+  "ads_txt_200": 7,
+  "adsense_meta_1": 7,
+  "essential_pages_all_200": true,
+  "broken_slugs": 0,
+  "auto_fix_triggered": false,
+  "delta_vs_previous": "none"
+}

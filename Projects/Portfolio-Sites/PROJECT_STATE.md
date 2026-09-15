@@ -1,6 +1,16 @@
 # Portfolio Sites — Project State
 ## Updated: 2026-09-15
 
+## Monitor Cycle (2026-09-15 06:17 SAST) — Phase F stable + AdSense blocker quantified (CORRECTION)
+- **Status:** all 7 homepages 200 across 3 passes, zero oscillation, sitemap↔REST parity 1:1, essentials 200, ads.txt 200 ×7, AdSense meta 1 ×7, 0 real broken slugs. Counts identical to 06:11.
+- **🚨 CORRECTION — the previous cycle's image alarm was a false alarm.** "87 zero-image / 45 one-image Articles" and "13 Articles with no featured image" were **external curl throttle artifacts**, not site state. Proof: zadocs `/how-to-draft-a-rental-agreement-in-south-africa/` was counted as 0 images but renders 2. A burst request returns **partial HTML with HTTP 200 and full `size_download`** — silent truncation. **Never derive an image count from externally-fetched `content.rendered` on this server.**
+- **AUTHORITATIVE image inventory (server-side PHP):** 115 Articles have **no in-content image** — zadocs 61, whippetqr 29, 5minutes 21, howzitza 4. **Zero** Articles are missing a featured image portfolio-wide (`_thumbnail_id` set on all 115).
+- **Root cause:** every broken Article was written by a pass that never inserted an in-content image (`post_content` = `figure=0 img=0 wp:image=0`). Themes render the featured image fine — verified in live HTML on all 4 affected sites.
+- **Secondary:** duplicate featured images — zadocs serves 73 Articles from only **13 distinct** featured images. Same shared-skeleton defect behind the AdSense "low value content" history.
+- **Not fixed (deliberate):** filename-based auto-assignment was evaluated and **rejected on evidence** (one baby-shower image matched 5 unrelated 5minutes Articles; 1/61 strong matches on zadocs). Needs new distinct topical images — a content-generation pass, not a copy pass.
+- **Cleaned:** 4 diagnostic PHP scripts removed from public web roots, verified 404.
+- See `2026-09-15-0617-portfolio-monitor-cycle.md`.
+
 ## Monitor Cycle (2026-09-15 04:35 SAST) — Phase F stable + 2 REPAIRS + attack-surface cleanup
 - **Status:** all 7 homepages 200 across 3 passes, zero oscillation, sitemap↔REST parity 1:1, essential pages OK, ads.txt 200 ×7, AdSense meta 1 ×7, 0 real broken slugs. No status change vs 04:21.
 - **REPAIR 1 — sumza.co.za sitemaps:** deleted by an accidental execution of the leftover `del_sitemap_sumza.php` helper during a `curl -sI` probe. Regenerated static `post-sitemap.xml` (39 urls), `page-sitemap.xml` (61 urls), `sitemap_index.xml`; all 200 now.

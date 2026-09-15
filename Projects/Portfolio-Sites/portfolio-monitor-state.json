@@ -1,5 +1,5 @@
 {
-  "cycle": "2026-09-15 04:35 SAST",
+  "cycle": "2026-09-15 06:17 SAST",
   "regime": "Phase F maintenance (stable)",
   "homepages": {
     "beanel.com": 200,
@@ -21,7 +21,7 @@
     "whippetqr.com": 44,
     "5minutes.co.za": 36
   },
-  "sitemap_locs": {
+  "sitemap_post_locs": {
     "beanel.com": 40,
     "howzitza.co.za": 34,
     "sumza.co.za": 39,
@@ -31,27 +31,34 @@
     "5minutes.co.za": 36
   },
   "sitemap_rest_parity": true,
-  "declared_sitemap_per_robots": {
-    "beanel.com": "sitemap_index.xml -> 200",
-    "howzitza.co.za": "sitemap_index.xml -> 200",
-    "sumza.co.za": "wp-sitemap.xml -> 200",
-    "zadocs.co.za": "sitemap_index.xml -> 200",
-    "saymyname.co.za": "sitemap_index.xml -> 200",
-    "whippetqr.com": "sitemap_index.xml -> 200",
-    "5minutes.co.za": "sitemap_index.xml -> 200"
-  },
   "ads_txt_200": 7,
   "adsense_meta_1": 7,
   "essential_pages_all_200": true,
   "broken_slugs": 0,
-  "auto_fix_triggered": true,
-  "content_integrity": "zero posts/pages lost; all post_modified timestamps predate this cycle's probes",
-  "fixes_this_cycle": [
-    "REPAIRED: sumza.co.za sitemaps were deleted by an accidental execution of the leftover del_sitemap_sumza.php helper during a HEAD probe. Regenerated static post-sitemap.xml (39 urls) + page-sitemap.xml (61 urls) + sitemap_index.xml via PHP. Verified all 200.",
-    "REPAIRED: /privacy-policy/ <-> /privacy-policy-2/ infinite 301 redirect loops on howzitza.co.za and saymyname.co.za (both pages unreachable). Root cause: the published Privacy Policy page carried the slug 'privacy-policy-2' while no page owned 'privacy-policy'. Renamed to canonical 'privacy-policy' on both. Verified both now 200 with no redirect.",
-    "CLEANED: quarantined 208 publicly-reachable content-mutating helper PHP scripts across the 6 cp47 web roots into a top-level _hermes_quarantine/ dir (FTP rename, recoverable, not deleted). Removed 11 of my own hermes-*.php helpers. Only WordPress core remains exposed.",
-    "CORRECTED: sumza.co.za robots.txt declares wp-sitemap.xml (native), so the sitemap_index.xml 404 is irrelevant — NOT a site fault. Declared sitemaps all 200 on all 7."
+  "delta_vs_previous": "no status change; content counts identical to 06:11 cycle",
+  "auto_fix_triggered": false,
+  "authoritative_image_inventory": {
+    "note": "server-side PHP (wp-load.php) read of post_content + _thumbnail_id. AUTHORITATIVE. Do NOT use externally-fetched content.rendered for image counts on this server.",
+    "howzitza.co.za": {"articles": 34, "content_img": 30, "no_content_img": 4, "thumb_assigned_all": true},
+    "sumza.co.za": {"articles": 39, "content_img": 39, "no_content_img": 0, "thumb_assigned_all": true},
+    "zadocs.co.za": {"articles": 73, "content_img": 12, "no_content_img": 61, "thumb_assigned_all": true},
+    "saymyname.co.za": {"articles": 34, "content_img": 34, "no_content_img": 0, "thumb_assigned_all": true},
+    "whippetqr.com": {"articles": 44, "content_img": 15, "no_content_img": 29, "thumb_assigned_all": true},
+    "5minutes.co.za": {"articles": 36, "content_img": 15, "no_content_img": 21, "thumb_assigned_all": true}
+  },
+  "adsense_blockers": {
+    "no_in_content_image_total": 115,
+    "duplicate_featured_images": "zadocs 13 distinct for 73 articles (759->21, 760->20, 758->20); sumza 10 for 39; saymyname 32 for 34"
+  },
+  "corrections_to_previous_cycle": [
+    "Previous 06:00 cycle reported 87 zero-image / 45 one-image articles and 13 articles with no featured image — all were external-throttle artifacts. Proof: zadocs /how-to-draft-a-rental-agreement-in-south-africa/ counted as 0 images but renders 2; burst requests return partial HTML with HTTP 200 and full size_download.",
+    "Real count: 115 articles have no IN-CONTENT image; 0 articles portfolio-wide are missing a featured image."
   ],
-  "incident_note": "Self-inflicted: probing leftover helper scripts with `curl -sI` EXECUTES them (HEAD still runs PHP). del_sitemap_sumza.php deleted sumza's sitemaps; other probed scripts were non-destructive by luck. Lesson recorded in skill: never request an unknown PHP file on a live site, not even HEAD.",
-  "delta_vs_previous": "No status change. All 7 homepages 200 across 3 passes; content counts identical to the 04:21 cycle; 0 oscillation."
+  "fixes_this_cycle": [
+    "Removed 4 diagnostic PHP scripts from public web roots after use, verified 404 (hermes_diag_images.php, hermes_diag_theme.php, hermes_inv.php across zadocs/5minutes/howzitza/whippetqr/sumza/saymyname).",
+    "Recorded both false-alarm mechanisms in the audit skill."
+  ],
+  "not_done": [
+    "115 articles still have no in-content image. Filename-based auto-assignment was evaluated and REJECTED on evidence (5minutes-fun-baby-shower image matched 5 unrelated articles; only 1/61 zadocs matched). Requires new distinct topical images — a content-generation pass, not a copy pass."
+  ]
 }

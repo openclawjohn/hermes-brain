@@ -1,11 +1,18 @@
 # RULES.md — Portfolio of 7 South African Domains
 
-**Last Updated:** 2026-08-03
+**Last Updated:** 2026-09-15
 **Purpose:** Mandatory development rules, quality gates, and workflow constraints for all 7 portfolio sites.
 
 ---
 
 ## 🚨 CRITICAL RULES (Never Violate)
+
+### 0. Verify With the Source of Truth, Never With a Throttled Proxy
+**A measurement taken through a throttled external HTTP path is not evidence.** On cp47, a burst `curl` request returns **partial HTML with HTTP 200 and a full `size_download`** — silent truncation with no error signal. Two consecutive cycles reported "87 zero-image / 45 one-image Articles" and "13 Articles with no featured image" from sweep-derived counts; **all of it was measurement error** (the real figure is 115 Articles with no in-content image, and zero missing featured images).
+
+- For content/image counts, read the database server-side (PHP via FTP → `wp-load.php`). That path is authoritative.
+- Before escalating any sweep-derived anomaly into a cross-cycle narrative, confirm it against the source of truth. A simultaneous multi-site collapse is far more likely to be the tool than the sites.
+- Corollary from the AdSense meta-tag incident: a 7/7 simultaneous regression is a tooling artifact until a plain quoted shell loop contradicts it.
 
 ### 1. Fix Everything You Find
 **The CEO does not "report issues." The CEO fixes them.** Every issue found must be resolved in the same run. The only exception is issues requiring the user's personal login (Google, GitHub OAuth) — and even then, document the exact 30-second steps needed.

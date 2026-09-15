@@ -1,5 +1,18 @@
 # Portfolio Sites — Project State
-## Updated: 2026-09-15
+## Updated: 2026-09-15 (evening)
+
+## AdSense Feedback Read Live + Quality Fixes (2026-09-15 ~18:50 SAST)
+- **AdSense read directly via Chrome Connector bridge — no guessing.** Real verdict: **only ONE site has a policy violation — howzitza.co.za = "Needs attention / Low value content", flagged Sep 12, 2026 6:10 AM SAST.** The other six are "Getting ready" with no violation (beanel, sumza, zadocs, saymyname, 5minutes, whippetqr).
+- **ads.txt "Not found" on 5 sites is NOT a file problem.** All 7 serve identical 59-byte files with correct pub ID + trailing newline, all 200, all serving 200 to AdsBot-Google/Googlebot/Mediapartners-Google. howzitza + whippetqr show Authorized with byte-identical files → the difference is Google-side crawl recognition. **Do NOT re-upload with a new timestamp — tried across multiple sessions, not a new fix.**
+- **Search Console: all 7 domains verified properties; every sitemap Success** (read Sep 10–14). Note sumza + whippetqr each have TWO sitemaps submitted (native `wp-sitemap.xml` + Rank Math `sitemap_index.xml`) — untidy, both Success.
+- **FIXED — broken empty-src images** (`<figure>` wrapping `<img src="">`, renders a broken image icon): howzitza 553 (×2), sumza 747 + 742 (×1 each), zadocs 1178 (×2). Verified on rendered pages.
+- **FIXED — howzitza duplicate/near-duplicate titles.** Renamed 457, 327, 301, 413. Now **0 duplicate titles**.
+- **FIXED — byte-identical replicated content.** 5minutes: 3 posts shared a 442-word block (hash 7b2fadf46c84) → replaced with unique prose. whippetqr: 3 posts shared an identical Conclusion (71w) + 3 posts shared an identical Conclusion (74w) AND a 781-word FAQ block → all 9 blocks replaced. **Re-check: 0 byte-identical sections across 5minutes/howzitza/zadocs/saymyname/whippetqr.**
+- **Housekeeping:** all fixer PHP deleted + 404-verified; sidecar dirs removed; 18 leftover content-mutating helper scripts quarantined to `_hermes_quarantine/` (zadocs archive_diag/create_articles_page/hm_audit/zd_diag/zd_diag2/zd_purge + 5 other sites' archive_diag + public_html); Chrome tab closed.
+- **See `2026-09-15-adsense-feedback-and-quality-fixes.md`.**
+
+## 🚨 CORRECTION to the 06:17 cycle claim below — zadocs DOES NOT render article images
+The 06:17 note says broken articles were only missing *in-content* images and that "Themes render the featured image fine — verified in live HTML on all 4 affected sites." **That is wrong for zadocs.** Direct rendered-page check (2026-09-15 19:2x): `leave-application-form`, `lease-agreement-template`, `employment-contract-template` each contain exactly **2 `<img>` tags — both the theme logo** (`cropped-Second-Logo.png`), plus **0 `<picture>`, 0 background-image refs, 0 `wp-post-image`**. So `_thumbnail_id` being set does not mean the image renders. **62 of 73 zadocs articles show no article image to a visitor at all.** This is the portfolio's largest remaining quality gap and the next job. (`featured` x4 on those pages is a CSS class/marker, not a rendered image.)
 
 ## Monitor Cycle (2026-09-15 06:17 SAST) — Phase F stable + AdSense blocker quantified (CORRECTION)
 - **Status:** all 7 homepages 200 across 3 passes, zero oscillation, sitemap↔REST parity 1:1, essentials 200, ads.txt 200 ×7, AdSense meta 1 ×7, 0 real broken slugs. Counts identical to 06:11.

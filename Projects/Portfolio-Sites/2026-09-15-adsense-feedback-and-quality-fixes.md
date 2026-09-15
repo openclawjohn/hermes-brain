@@ -155,14 +155,64 @@ whippetqr.com     posts=44  byte-identical sections: 0
 
 ---
 
-## 5. Still open / NOT fixed
+## 5. 🚨 MY FIRST IMAGE SCANNER WAS BROKEN — corrected scan is authoritative
 
-1. **zadocs.co.za — 62 of 73 articles contain ZERO images.** Verified on live pages: the only `<img>` tags are the theme logo (`cropped-Second-Logo.png`) twice. 71 of 73 posts DO have `featured_media` set, and the media library holds images — but the theme does not render `the_post_thumbnail()` and the images are not embedded in `post_content`. This is the portfolio's largest remaining quality gap and a genuine AdSense risk. **This is the next job.**
-2. **howzitza — "Low value content" not yet cleared.** Titles are now unique, but the 3 near-duplicate topic pairs (languages / street food / slang) remain as overlapping subjects, and 12 posts share the 2026-08-20 publish date. No "Request review" submitted.
-3. **whippetqr — 2 posts still report <2 images** to the auditor; **beanel post 900** has 1 image; **saymyname** 1 post.
-4. **5minutes article images not verified** (Elementor storage).
-5. Remaining WARNs on all sites (non-blocking): `internal_links` (4–5 sampled posts with none), `sitemap_lastmod` (static sitemaps omit `<lastmod>`), `image_formats` (no WebP/AVIF), `aria_labels`, `modified_dates_consistent`, `ttfb` (saymyname 3/3 >600ms).
-6. **sumza + whippetqr have duplicate sitemaps submitted** in Search Console; sumza robots.txt points at `wp-sitemap.xml` while Rank Math `sitemap_index.xml` is also live.
+The first scan (`portfolio-image-scan.py`) **over-reported by ~10×**. Final numbers and the correction:
+
+| Site | posts | FIRST (wrong) | **CORRECTED** | actual defect |
+|---|---|---|---|---|
+| beanel.com | 40 | 2 | **0** | — (1000 fixed, 900 = 1 img) |
+| howzitza.co.za | 34 | 1 | **0** ✅ | — |
+| sumza.co.za | 39 | 2 | **0** ✅ | — |
+| zadocs.co.za | 73 | 62 | **62** ❌ | no article image renders |
+| saymyname.co.za | 34 | 0 | **0** ✅ | — |
+| whippetqr.com | 44 | 32 | **0** ✅ | — (591 fixed) |
+| 5minutes.co.za | 36 | 26 | **26** ❌ | no article image renders |
+| **total** | **300** | 125 | **88** | |
+
+**Root cause of the false alarm:** the script isolated the article body with a `class="...entry-content..."` regex. On these themes `entry-content` also appears **inside an inline `<style>` block** (e.g. `.page .entry-content { margin: 0 !important; }`), so the regex matched a **CSS rule**, the body was truncated, and the post was reported `imgs=0`. Spot-checking 6 whippetqr "broken" posts with a correct extractor gave **2 images and 1,718–2,308 words each** — not broken.
+
+**Correct extractor:** strip `<script>`/`<style>`, then take from the first `<h1>` to `<footer>`/`</article>`; exclude `custom-logo`; count empty-src `<img>` explicitly.
+
+- Authoritative file: `/home/m/portfolio-image-scan-corrected.json`
+- Script: `~/.hermes/scripts/portfolio-image-scan-corrected.py`
+- The broken script is kept as `portfolio-image-scan.py.BROKEN-entry-content-regex`; the bad JSON and log were deleted.
+
+**Lesson: a scanner reporting a large number is not evidence.** This false alarm almost caused a rewrite of 32 articles that were never broken.
+
+## 6. ✅ FIXED this round (all verified on the rendered page)
+
+| Site | Post | defect | after |
+|---|---|---|---|
+| beanel.com | 1000 what-is-a-mac-address… | 2 empty-src figures | 2 imgs, 0 empty (`beanel_router.jpg`, `beanel_network2.jpg`) |
+| whippetqr.com | 591 qr-codes-for-restaurant-menus… | 2 empty-src figures | 2 imgs, 0 empty (`whippetqr_scan.jpg`, `whippetqr_qr.jpg`) |
+
+**Security cleanup:** 15 publicly-reachable content-mutating scripts quarantined from beanel's web root (`weekly_article.php`, `weekly_aug16.php`, `beanel_article.php`, `beanel_purge.php`, `c.php`, `d.php`, `h.php`, `i.php`, `k.php`, `s.php`, `cleanup.php`, `fix-fn.php`, `fix-uncategorized-beanel.php`, `fix_alt_simple.php`, `fix_titles_beanel.php`) — all 404 verified. Only WP core PHP remains reachable on beanel. Combined with the 18 removed from cp47, **33 live content-mutating scripts were removed today.**
+
+## 7. 🚨 THE ZADOCS + 5MINUTES DEFECT, ROOT-CAUSED
+
+Same problem on both sites, and it is **not** a missing featured image:
+
+| Site | Post | visible `<img>` in article body | where the featured image actually is |
+|---|---|---|---|
+| zadocs | 16 `leave-application-form` | **2 — both the theme logo** | only in `og:image` / `twitter:image` / schema `primaryImageOfPage` |
+| zadocs | `lease-agreement-template`, `employment-contract-template` | same | same |
+| 5minutes | 132 `find-the-springbok-…` | **2 — both the site logo** | only in the Elementor JSON config + `og:image` |
+
+Zero `wp-post-image`, zero `<picture>`, zero background-image refs. Astra declares `has-post-thumbnail` but renders nothing. **`_thumbnail_id`/`featured_media` being set does NOT mean the image renders.**
+
+- **Proof it is fixable:** the **10 newest 5minutes articles render 2 images each** (592 baby-shower → `…-1.jpg` + `…-2.jpg`; 585 wedding → `wedding-games-table.jpg` + `wedding-games-guests.jpg`). The 26 older ones simply never had the embed inserted.
+- **Duplicate-image problem on top:** zadocs' 73 articles use only **13 distinct** featured images (media 760 ×21, 759 ×20, 758 ×20). Even with the theme rendering them, 61 articles would show near-identical pictures. Needs genuinely new topical images — a content-generation pass, not a mapping fix.
+
+## 8. Still open / NOT fixed
+
+1. **zadocs.co.za — 62 of 73 articles show a visitor no article image.** 71 of 73 have `featured_media` set and the images exist in the media library, but Astra does not render the thumbnail and no image is embedded in `post_content`. Largest remaining quality gap, strongest AdSense risk.
+2. **5minutes.co.za — 26 of 36 articles** same defect (Elementor storage).
+3. **zadocs — 61 duplicate featured images** (13 distinct across 73 articles).
+4. **howzitza — "Low value content" not yet cleared.** Titles are now unique, but the 3 near-duplicate topic pairs (languages / street food / slang) remain as overlapping subjects, and 12 posts share the 2026-08-20 publish date. No "Request review" submitted.
+5. **beanel post 900** `protect-privacy-social-media-south-africa` has only 1 image.
+6. Remaining WARNs on all sites (non-blocking): `internal_links` (4–5 sampled posts with none), `sitemap_lastmod` (static sitemaps omit `<lastmod>`), `image_formats` (no WebP/AVIF), `aria_labels`, `modified_dates_consistent`, `ttfb` (saymyname 3/3 >600ms).
+7. **sumza + whippetqr have duplicate sitemaps submitted** in Search Console; sumza robots.txt points at `wp-sitemap.xml` while Rank Math `sitemap_index.xml` is also live.
 
 ---
 

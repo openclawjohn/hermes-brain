@@ -5,14 +5,35 @@
 - **AdSense read directly via Chrome Connector bridge — no guessing.** Real verdict: **only ONE site has a policy violation — howzitza.co.za = "Needs attention / Low value content", flagged Sep 12, 2026 6:10 AM SAST.** The other six are "Getting ready" with no violation (beanel, sumza, zadocs, saymyname, 5minutes, whippetqr).
 - **ads.txt "Not found" on 5 sites is NOT a file problem.** All 7 serve identical 59-byte files with correct pub ID + trailing newline, all 200, all serving 200 to AdsBot-Google/Googlebot/Mediapartners-Google. howzitza + whippetqr show Authorized with byte-identical files → the difference is Google-side crawl recognition. **Do NOT re-upload with a new timestamp — tried across multiple sessions, not a new fix.**
 - **Search Console: all 7 domains verified properties; every sitemap Success** (read Sep 10–14). Note sumza + whippetqr each have TWO sitemaps submitted (native `wp-sitemap.xml` + Rank Math `sitemap_index.xml`) — untidy, both Success.
-- **FIXED — broken empty-src images** (`<figure>` wrapping `<img src="">`, renders a broken image icon): howzitza 553 (×2), sumza 747 + 742 (×1 each), zadocs 1178 (×2). Verified on rendered pages.
+- **FIXED — broken empty-src images** (`<figure>` wrapping `<img src="">`, renders a broken image icon), all verified on the rendered page: howzitza 553 (×2), sumza 747 + 742 (×1 each), zadocs 1178 (×2), **beanel 1000 (×2)**, **whippetqr 591 (×2)**.
 - **FIXED — howzitza duplicate/near-duplicate titles.** Renamed 457, 327, 301, 413. Now **0 duplicate titles**.
 - **FIXED — byte-identical replicated content.** 5minutes: 3 posts shared a 442-word block (hash 7b2fadf46c84) → replaced with unique prose. whippetqr: 3 posts shared an identical Conclusion (71w) + 3 posts shared an identical Conclusion (74w) AND a 781-word FAQ block → all 9 blocks replaced. **Re-check: 0 byte-identical sections across 5minutes/howzitza/zadocs/saymyname/whippetqr.**
-- **Housekeeping:** all fixer PHP deleted + 404-verified; sidecar dirs removed; 18 leftover content-mutating helper scripts quarantined to `_hermes_quarantine/` (zadocs archive_diag/create_articles_page/hm_audit/zd_diag/zd_diag2/zd_purge + 5 other sites' archive_diag + public_html); Chrome tab closed.
+- **FULL CORRECTED PORTFOLIO IMAGE SCAN — 300 articles** (`~/.hermes/scripts/portfolio-image-scan-corrected.py` → `/home/m/portfolio-image-scan-corrected.json`). Final: **beanel 0, howzitza 0, sumza 0, saymyname 0, whippetqr 0, zadocs 62, 5minutes 26** with real defects. See the two sections below.
+- **Housekeeping:** all fixer PHP deleted + 404-verified; sidecar dirs removed; **33 publicly-reachable content-mutating helper scripts quarantined** to `_hermes_quarantine/` (18 on cp47: zadocs archive_diag/create_articles_page/hm_audit/zd_diag/zd_diag2/zd_purge + other sites' archive_diag + public_html; **15 on beanel**: weekly_article.php, weekly_aug16.php, beanel_article.php, beanel_purge.php, c.php, d.php, h.php, i.php, k.php, s.php, cleanup.php, fix-fn.php, fix-uncategorized-beanel.php, fix_alt_simple.php, fix_titles_beanel.php). Only WP core PHP now reachable on beanel. Chrome tab closed.
 - **See `2026-09-15-adsense-feedback-and-quality-fixes.md`.**
 
-## 🚨 CORRECTION to the 06:17 cycle claim below — zadocs DOES NOT render article images
-The 06:17 note says broken articles were only missing *in-content* images and that "Themes render the featured image fine — verified in live HTML on all 4 affected sites." **That is wrong for zadocs.** Direct rendered-page check (2026-09-15 19:2x): `leave-application-form`, `lease-agreement-template`, `employment-contract-template` each contain exactly **2 `<img>` tags — both the theme logo** (`cropped-Second-Logo.png`), plus **0 `<picture>`, 0 background-image refs, 0 `wp-post-image`**. So `_thumbnail_id` being set does not mean the image renders. **62 of 73 zadocs articles show no article image to a visitor at all.** This is the portfolio's largest remaining quality gap and the next job. (`featured` x4 on those pages is a CSS class/marker, not a rendered image.)
+## 🚨 MY FIRST IMAGE SCANNER WAS BROKEN — use the CORRECTED extractor
+The first scan (`portfolio-image-scan.py`, `/home/m/portfolio-image-scan.json`) **over-reported by a factor of 10**. It flagged **125** posts portfolio-wide including **whippetqr 32** and **5minutes 26**. Spot-checking 6 whippetqr "broken" posts with a correct extractor showed **2 images and 1,718–2,308 words each — not broken at all.**
+- **Root cause:** the script isolated the article body with a `class="...entry-content..."` regex. On these themes `entry-content` also appears **inside an inline `<style>` block** (e.g. `.page .entry-content { margin: 0 !important; }`), so the regex matched a CSS rule, the body was truncated to a fragment, and the post was reported as `imgs=0`.
+- **The fix:** strip `<script>`/`<style>`, then take from the first `<h1>` to `<footer>`/`</article>`. Also exclude `custom-logo` and count empty-src `<img>` explicitly.
+- **TRUST THE CORRECTED FILE:** `/home/m/portfolio-image-scan-corrected.json` (300 articles, 91 with issues). Delete/ignore the old JSON and script.
+- **Lesson: a scanner that reports a large number is not evidence. Spot-check several "failing" items with an independent method before acting on a bulk result** — this false alarm almost triggered rewriting 32 articles that were never broken.
+
+## 🚨 CORRECTION to the 06:17 cycle claim below — zadocs and 5minutes DO NOT render article images
+The 06:17 note says broken articles were only missing *in-content* images and that "Themes render the featured image fine — verified in live HTML on all 4 affected sites." **That is wrong.** Confirmed on rendered pages 2026-09-15 evening:
+
+| Site | Post | Visible `<img>` in article body | Where the featured image actually is |
+|---|---|---|---|
+| zadocs | 16 `leave-application-form` | **2 — both the theme logo** (`cropped-Second-Logo.png`) | only in `og:image` / `twitter:image` / schema `primaryImageOfPage` |
+| zadocs | `lease-agreement-template`, `employment-contract-template` | same (2 logo imgs) | same |
+| 5minutes | 132 `find-the-springbok…` | **2 — both the site logo** | only in the Elementor JSON config + `og:image` |
+
+Zero `wp-post-image`, zero `<picture>`, zero background-image refs, zero `<img>` for the featured image on those pages. Astra declares `has-post-thumbnail` but renders nothing. **So `_thumbnail_id`/`featured_media` being set does NOT mean the image renders.**
+
+- **zadocs: 62 of 73 articles show a visitor no article image at all.**
+- **5minutes: 26 of 36.** The **10 newest render 2 images each** (e.g. 592 baby-shower → `…-1.jpg` + `…-2.jpg`; 585 wedding → `wedding-games-table.jpg` + `wedding-games-guests.jpg`) — **which proves the theme CAN render them; the older posts simply never had the embed inserted.**
+- **Secondary:** duplicate featured images — zadocs' 73 articles use only **13 distinct** featured images (media 760 ×21, 759 ×20, 758 ×20). Even if the theme rendered them, 61 articles would show near-identical pictures. Needs genuinely new topical images — a content-generation pass.
+- **Next job.** 88 articles (62 + 26) need the image embed inserted, and 61 zadocs featured images need replacing with distinct topical photos.
 
 ## Monitor Cycle (2026-09-15 06:17 SAST) — Phase F stable + AdSense blocker quantified (CORRECTION)
 - **Status:** all 7 homepages 200 across 3 passes, zero oscillation, sitemap↔REST parity 1:1, essentials 200, ads.txt 200 ×7, AdSense meta 1 ×7, 0 real broken slugs. Counts identical to 06:11.

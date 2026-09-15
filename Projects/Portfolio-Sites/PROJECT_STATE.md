@@ -122,6 +122,15 @@
   - Rebuilt static sitemaps (0 `-2` slugs), pinged IndexNow (202). Other 4 sites' reasons (noindex/4xx/404) were already-fine system pages.
 - **Key learning:** LiteSpeed page cache serves stale 200s — ALWAYS purge cache before verifying URL redirect/behavior changes. See `2026-08-10-portfolio-indexing-duplicate-fix.md`.
 
+## Recent Work (2026-09-15 08:10)
+- **Monitor cycle (Phase F, no status change, all 7 UP):** Housekeeping pending from 07:53 executed — 19 stale artifacts (helper PHP, image dirs, `.txt` dumps, `.html` drafts) quarantined by FTP rename to `/_hermes_quarantine/`, each verified 404; all 7 homepages re-verified 200 after removal. Verified 0 posts referenced `imgfix_tmp` before removing those dirs.
+- **Sitemap gap = 0 on every site.** Prior Rank Math exclusion gaps (beanel 31/16, sumza 27/22, saymyname 31/17, 5minutes 40/13) resolved. Content counts up across sites from the Tuesday 02:00 weekly-articles cron.
+- **whippetqr sitemap corruption RESOLVED:** robots.txt now declares `sitemap_index.xml` (Rank Math); was `wp-sitemap.xml` returning homepage HTML. Long-standing "worst-positioned" defect closed.
+- **Broken slugs (-2/-3) = 0 on all 7** — backlog cleared.
+- **Remaining content work:** 82 Articles with no in-body image (zadocs 61, 5minutes 21). 0 Articles missing featured image portfolio-wide. zadocs serves 73 Articles from only 13 distinct featured images (shared-skeleton defect behind AdSense rejections).
+- **Total Articles: 300** (beanel 40, howzitza 34, sumza 39, zadocs 73, saymyname 34, whippetqr 44, 5minutes 36).
+- Doc: `2026-09-15-0810-portfolio-monitor-housekeeping-and-gap-verify.md`
+
 ## Recent Work (2026-08-08)
 - **Portfolio-wide boilerplate fix (COMPLETE):** Removed byte-identical "Why This Matters" blocks from sumza (16 posts) + beanel (28 posts); top-upped 7 short 5minutes posts. All 7 sites now have 0 boilerplate markers, every article 1,500+ words.
 - **Sitemap recrawl:** IndexNow pinged all 7 sitemaps (HTTP 202) + Google Search Console "Request Indexing" submitted on all 7 via user's Chrome.
@@ -153,7 +162,9 @@
 
 ## Known Issues
 - **Beanel FTP access** — broken, cannot fix contact redirect or sitemap remotely
-- **Sitemap regeneration** — failed on whippetqr, howzitza, sumza, beanel (PHP error on those sites)
+- ~~**Sitemap regeneration** — failed on whippetqr, howzitza, sumza, beanel~~ **RESOLVED (verified 2026-09-15 08:10):** all sites serve valid XML with loc counts matching REST `x-wp-total`. whippetqr now uses `sitemap_index.xml` (Rank Math).
 - **REST API** — application passwords lack edit permissions, must use PHP/FTP for content updates
+- **82 Articles have no in-body image** (zadocs 61, 5minutes 21) — needs a content-generation pass with new subject-checked images, not reuse
+- **zadocs featured-image duplication** — 73 Articles served from only 13 distinct featured images; shared-skeleton defect behind AdSense "low value content" rejections
 - **Pinterest pin creation via bridge** — save-from-URL fetches image but selection UI never renders; bridge lacks CDP file-upload. Needs manual pin or CDP route.
 - **Reddit / Medium** — logged out in Chrome profile; CEO backfill for these platforms blocked until user logs in.

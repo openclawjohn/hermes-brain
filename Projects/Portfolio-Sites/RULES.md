@@ -266,3 +266,16 @@ approach and the update succeeded."
 - [ ] PROJECT_STATE.md updated if anything changed
 - [ ] DESIGN_SYSTEM.md updated if design patterns changed
 - [ ] RULES.md updated if new rules discovered
+
+---
+
+## Sub-rules discovered 2026-09-15
+
+### 6d — Quarantine by rename, and prove the file is unused BEFORE removing it
+Removing a leftover file is safe; removing a file a live page references is an outage. Before quarantining anything that could be referenced by content (`imgfix_tmp/` image dirs, upload folders, `*.html` drafts), grep every post's content for the path server-side and confirm **0 references**. FTP `rename` into `/_hermes_quarantine/` (never delete — recoverable), then verify the URL returns **404**, then re-verify the homepages of every touched site still return 200.
+
+### 6e — Read a leftover `.txt`/`.php` dump before trusting it is harmless
+Download via FTP and read it. Confirmed this cycle: the only "secret/password" grep hit in `full_199.txt` was article prose ("secret spice blend"), and the diagnostic dump held only calculator field names. Judge on the content, not the filename.
+
+### 6f — Cross-check the sitemap the site actually declares, and re-check it every cycle
+whippetqr.com's long-running "sitemap cache corruption" was not corruption at all — `robots.txt` declared `wp-sitemap.xml` (which returned homepage HTML) while Rank Math's `sitemap_index.xml` was always the real sitemap. It now declares `sitemap_index.xml` and serves valid XML. A 404 or HTML body on a *guessed* sitemap URL is not a fault; read `robots.txt` first, every cycle, because the declaration can change.

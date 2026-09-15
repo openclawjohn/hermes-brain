@@ -39,6 +39,12 @@ On ALL websites, blog posts are ALWAYS called "Articles" — never "posts," "blo
 ### 6. Every Article Must Have 2 Images
 Non-negotiable. Every article gets exactly 2 real CC-licensed photos. Featured at top, in-content at ~55% through. Different subjects. Visually inspected for text/logos/watermarks before deployment.
 
+**Sub-rule 6a — On howzitza.co.za the theme does not render the featured image at all.** Proven 2026-09-15: post 221 had `featured_media` set (thumb 249) yet the live logged-out page contained **0 `<img>` tags**. A featured image alone buys a howzitza Article nothing — only in-body images reach the visitor. Assign both, but never count the featured image as one of the two *visible* images on this site.
+
+**Sub-rule 6b — Verify image POSITION on the rendered page, not just image COUNT.** Inserting a second image with a naive "after the Nth `</h2>`" rule lands both figures at the **same h2 depth** when the first is already near that depth — the result is two stacked images with zero text between them, which reads as a layout defect even though the count check passes. The fix is explicit: hero figure before any body text, second figure at ~55% depth, then re-fetch the live page and assert `depth(fig1) < 0.1` and `0.4 < depth(fig2) < 0.7`. Count-only verification does not catch this.
+
+**Sub-rule 6c — Reject candidates whose *background* carries branding, not just the subject.** `vision_analyze` on six candidates found the disqualifying text was never the subject: a Coca-Cola can behind a bunny chow, SPAR and Coca-Cola signage behind a braai vendor, a Coca-Cola fridge and Flora logo in a food-stall shot, "Durex"/"tomatoes" on repurposed crates in a market photo. Always use the full pixel-scan question ("all corners, edges, and center") and reject on any incidental real-world branding.
+
 ### 7. Git + Obsidian + State Files (Mandatory)
 Every task requires:
 - Git commit with meaningful message

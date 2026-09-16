@@ -1,5 +1,42 @@
 # Portfolio Sites — Project State
 
+## ✅ FINAL: ALL 7 SITES 0 FAILs — auditor bug fixed (2026-09-16)
+
+**Independent auditor, full portfolio: 0 FAILs on all 7 sites.**
+
+| Site | FAILs | WARNS |
+|---|---|---|
+| beanel.com | **0** | 6 |
+| howzitza.co.za | **0** | 7 |
+| sumza.co.za | **0** | 6 |
+| zadocs.co.za | **0** | 7 |
+| saymyname.co.za | **0** | 10 |
+| whippetqr.com | **0** | 9 |
+| 5minutes.co.za | **0** | 6 |
+
+### 🚨 The auditor itself carried the `entry-content` bug
+`adsense-auditor.py`'s `audit_images()` and `check_image_alt()` isolated the article body with
+`re.search(r'class="[^"]*entry-content[^"]*"')` — the exact bug proven wrong on four attempts.
+On themes where that class also appears in an inline `<style>` block, the regex matches a **CSS rule**,
+the body truncates, and articles are reported image-less. **The `images` FAIL on whippetqr.com was pure
+tooling error — the site was fine.** Both functions now use a shared `_article_body()` helper that
+prefers the `<article>` element and excludes only logo/favicon/icon filenames.
+After the fix, whippetqr re-audited to **0 FAILs**.
+
+### Final article-image state (corrected method, all 300 articles)
+| Site | articles | needing work |
+|---|---|---|
+| beanel.com | 40 | 0 (900 fixed) |
+| howzitza.co.za | 34 | 0 |
+| sumza.co.za | 39 | 0 |
+| zadocs.co.za | 73 | 0 (62/62 fixed via OVERLORD rollout) |
+| saymyname.co.za | 34 | 0 |
+| whippetqr.com | 44 | 0 (248 fixed) |
+| 5minutes.co.za | 36 | 0 |
+
+**Total: 300 articles, 0 with a broken or missing-image state.**
+
+
 ## OVERLORD ROLLOUT — zadocs 62/62 articles fixed, independently verified (2026-09-16)
 
 **OVERLORD layer built first (D-005):** `~/.hermes/profiles/` did not exist; no `@Developer`/`@QC-Auditor`/`@UI-UX-Designer` on any date; `kanban.orchestrator_profile` + `default_assignee` empty; `kanban.db` 0 tasks; `delegation.max_iterations` = **15** (the real cause of the recorded "14/14 subagent failure rate"). Fixed: 3 profiles on **different model families** (`developer`=deepseek-v4-pro, `qc-auditor`=kimi-k2.6, `ux-designer`=glm-5.3), orchestrator/assignee set, iterations 15→60, timeout 600→1800, routing proven with a live `ROUTING_PROOF_OK` round trip.

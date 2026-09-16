@@ -1,5 +1,36 @@
 # Portfolio Sites — Project State
 
+## ✅ howzitza AdSense REVIEW SUBMITTED (2026-09-16)
+
+**The rejection is cleared and the review is submitted.** Via the Chrome Connector bridge, signed in
+as the user, on `sites/detail/url=howzitza.co.za`:
+
+| | Before | After |
+|---|---|---|
+| Approval status | **Needs attention** | **Getting ready** |
+| Status details | **Low value content** | *(violation block gone)* |
+| Review state | — | **Review requested** |
+
+**Why it was justified to submit (verified immediately beforehand):**
+- **0 duplicate titles** (was 2 posts sharing "The 11 Official Languages of South Africa: A Complete Guide")
+- **0 byte-identical replicated sections** across all 34 articles
+- The 3 former near-duplicate topic pairs now have text similarity **0.013–0.035** with **0 shared
+  12-word phrases** — i.e. genuinely distinct articles, not paraphrases
+- All 34 articles ≥1,575 words; **0 image defects** (empty-src figures removed, 0 missing images)
+- Independent auditor: **howzitza 0 FAILs**
+
+**Method note:** the confirm control is a custom `<material-checkbox role="checkbox">`, NOT an
+`input[type=checkbox]` — clicking it flipped `aria-checked` false→true, then "Request review" was
+clicked and the flip verified on the detail page (the `Request time: 12 Sep 2026` line is the
+original rejection timestamp, not the submission time — do not read it as a failed submit).
+
+AdSense states: a few days, up to 2–4 weeks.
+
+**Chrome was not running** when the submission was attempted; it was launched on `DISPLAY=:0` and the
+connector reconnected on its own. All AdSense tabs closed afterwards (one blank `chrome://newtab/`
+remains — the bridge will not close it).
+
+
 ## ✅ FINAL: ALL 7 SITES 0 FAILs — auditor bug fixed (2026-09-16)
 
 **Independent auditor, full portfolio: 0 FAILs on all 7 sites.**

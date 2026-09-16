@@ -1,4 +1,21 @@
 # Portfolio Sites — Project State
+
+## OVERLORD ROLLOUT — zadocs 62/62 articles fixed, independently verified (2026-09-16)
+
+**OVERLORD layer built first (D-005):** `~/.hermes/profiles/` did not exist; no `@Developer`/`@QC-Auditor`/`@UI-UX-Designer` on any date; `kanban.orchestrator_profile` + `default_assignee` empty; `kanban.db` 0 tasks; `delegation.max_iterations` = **15** (the real cause of the recorded "14/14 subagent failure rate"). Fixed: 3 profiles on **different model families** (`developer`=deepseek-v4-pro, `qc-auditor`=kimi-k2.6, `ux-designer`=glm-5.3), orchestrator/assignee set, iterations 15→60, timeout 600→1800, routing proven with a live `ROUTING_PROOF_OK` round trip.
+
+**zadocs result:** 62/62 articles now render **2 distinct images** (pilot 5/5 + rollout 57/57), 0 empty srcs, ≥1,500 words. Verified independently by the OVERLORD *and* by `qc-auditor` on a different model.
+
+**Failure handled as an input:** batch 4 exhausted its iteration budget (90/90); the board auto-re-queued it; the OVERLORD re-inspected, found image 1 present / image 2 missing, and re-briefed a narrower card — which completed. No capability claim made.
+
+**🚨 I was wrong THREE times measuring 5minutes:** `entry-content` regex → 26 bad; `<h1>`→footer → 11; minus "homepage baseline" → 16. All wrong. **A homepage screenshot is NOT site chrome — the homepage lists recent articles' featured images, so excluding them discards real article images.** Correct method: count `<img>` inside the `<article>` element, exclude only the logo. **True result: 5minutes 36/36 PASS, 0 defects.** When three attempts give three answers, the method is the bug.
+
+**Cleanup:** `zd-embed.php`, `zd-fix.php`, `zd-diag.php`, `hm_audit.php`, `archive_diag.php` all 404.
+
+**Still open:** zadocs hero-image duplication (3 images reused as hero across many articles — aesthetic, not a gate failure); beanel post 900 (1 image); howzitza review not submitted.
+
+**See `2026-09-16-overlord-layer-and-zadocs-62of62.md`.**
+
 ## Updated: 2026-09-16
 
 ## Recent Work (2026-09-16)
